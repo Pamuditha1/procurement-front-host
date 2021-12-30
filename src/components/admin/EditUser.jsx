@@ -1,0 +1,203 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import updateUser from "../../services/updateUser";
+import removeeUser from "../../services/removeUser";
+
+function EditUser({ selectedUser, history }) {
+  const [user, setuser] = useState({});
+  const [passData, setpassData] = useState({
+    password: "",
+    passwordT: "",
+    passwordr: "",
+    passError: "",
+  });
+  const onchangePassword = (e) => {
+    if (e.target.name == "password") {
+      setpassData({
+        ...passData,
+        passwordT: e.target.value,
+      });
+      return;
+    }
+
+    if (e.target.name == "passwordr") {
+      if (e.target.value == passData.passwordT) {
+        setpassData({
+          ...passData,
+          password: e.target.value,
+          passwordr: e.target.value,
+          passError: "",
+        });
+        return;
+      } else {
+        setpassData({
+          ...passData,
+          passwordr: e.target.value,
+          passError: "Password is different to above",
+        });
+        return;
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.log(selectedUser);
+    setuser(selectedUser);
+  }, []);
+
+  const onchange = (e) => {
+    console.log("Cuu User", user);
+    setuser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+    // console.log(supplierData)
+  };
+
+  const removeUser = async (id) => {
+    console.log("Remove id", id);
+    await removeeUser(id);
+    history.push("/admin/view-users");
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    // setLoading(true);
+    // await updateUser(item);
+    let update = {
+      user: user,
+      pass: passData.password,
+    };
+    console.log("Update", update);
+    await updateUser(update);
+    // setLoading(false);
+  };
+  return (
+    <div>
+      <h6
+        className="pl-5 pt-1 pb-1 mb-5 mt-4"
+        style={{ backgroundColor: "gray" }}
+      >
+        Update User
+      </h6>
+      <form className="container mt-5" autoComplete="off">
+        <div className="row">
+          <div className="col-12">
+            <button
+              onClick={() => removeUser(user._id)}
+              type="button"
+              className="btn btn-danger float-right"
+            >
+              Remove User
+            </button>
+          </div>
+          <div className="col-12">
+            <div className="row">
+              <div className="form-group col-12">
+                <label htmlFor="username" className="col-5">
+                  Name
+                </label>
+                <input
+                  onChange={onchange}
+                  value={user.username}
+                  className="form-control col-11 ml-3"
+                  type="text"
+                  id="username"
+                  name="username"
+                />
+              </div>
+              <div className="form-group col-12">
+                <label htmlFor="contactNo" className="col-5">
+                  Contact No
+                </label>
+                <input
+                  onChange={onchange}
+                  value={user.contactNo}
+                  className="form-control col-11 ml-3"
+                  type="text"
+                  id="contactNo"
+                  name="contactNo"
+                />
+              </div>
+              <div className="form-group col-12">
+                <label htmlFor="email" className="col-5">
+                  Email
+                </label>
+                <input
+                  onChange={onchange}
+                  value={user.email}
+                  className="form-control col-11 ml-3"
+                  type="text"
+                  id="email"
+                  name="email"
+                />
+              </div>
+              <div className="form-group col-12">
+                <label htmlFor="address" className="col-5">
+                  Address
+                </label>
+                <input
+                  onChange={onchange}
+                  value={user.address}
+                  className="form-control col-11 ml-3"
+                  type="text"
+                  id="address"
+                  name="address"
+                />
+              </div>
+              <div className="form-group col-12">
+                <label htmlFor="password" className="col-5">
+                  New Password
+                </label>
+                <input
+                  onChange={onchangePassword}
+                  value={passData.passwordT}
+                  className="form-control col-11 ml-3"
+                  type="password"
+                  id="password"
+                  name="password"
+                />
+              </div>
+              <div className="form-group col-12">
+                <label htmlFor="passwordr" className="col-5">
+                  Repeat Password
+                </label>
+                <input
+                  onChange={onchangePassword}
+                  value={passData.passwordr}
+                  className="form-control col-11 ml-3"
+                  type="password"
+                  id="passwordr"
+                  name="passwordr"
+                />
+                {passData.passError && (
+                  <p className="col-11 ml-3 " style={{ color: "red" }}>
+                    {passData.passError}
+                  </p>
+                )}
+              </div>
+              <div className="form-group col-12 mt-3">
+                <center>
+                  <Link to="/admin/view-users">
+                    <button type="button" className="btn btn-dark m-5">
+                      Back
+                    </button>
+                  </Link>
+                  <button
+                    onClick={submit}
+                    type="submit"
+                    className="btn btn-success"
+                  >
+                    Update
+                  </button>
+                </center>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default EditUser;
