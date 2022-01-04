@@ -2,17 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 
-import msr from "../../icons/msr2.png";
-import msrB from "../../icons/msr2B.png";
-import du from "../../icons/du2.png";
-import duB from "../../icons/du2B.png";
-import pr from "../../icons/pr2.png";
-import prB from "../../icons/pr2B.png";
-import po from "../../icons/po2.png";
-import poB from "../../icons/po2B.png";
-import grn from "../../icons/grn2.png";
-import grnB from "../../icons/grn2B.png";
-
 function DocumentItem(props) {
   const [hover, sethover] = useState("");
 
@@ -57,17 +46,13 @@ function DocumentItem(props) {
     <div className="col-sm-12 col-lg-6 mb-5">
       <Link to={`${props.link}`}>
         <Button
-          style={hover == props.link ? hoverStyle : itemstyle}
+          style={hover === props.link ? hoverStyle : itemstyle}
           onMouseEnter={toggleHover}
           onMouseLeave={outToggle}
           name={props.link}
         >
           <div className="row pl-5 pr-5">
-            <div className="col-3">
-              {/* <span>
-                <img height="35px" width="35px" src={props.img} />
-              </span> */}
-            </div>
+            <div className="col-3"></div>
             <div className="col-6">{props.name}</div>
           </div>
         </Button>

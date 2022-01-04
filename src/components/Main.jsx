@@ -14,11 +14,17 @@ function Main() {
   useEffect(() => {
     document.title = "Welkin Constructions";
   }, []);
+
+  const style = {
+    width: "100%",
+    height: "100%",
+  };
   return (
-    <>
+    <div style={style}>
       <ControlHeader />
       <div className="container">
         <ToastContainer />
+
         <Switch>
           <Route path="/site-engineer" component={SiteEngineer} />
           <Route path="/site-supervisor" component={SiteSupervisor} />
@@ -29,7 +35,7 @@ function Main() {
           <Route path="/" component={Login} />
         </Switch>
       </div>
-    </>
+    </div>
   );
 }
 

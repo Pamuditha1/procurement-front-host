@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
-import Background from "../images/cover.jpg";
+import Background from "../images/cover.png";
 
 import userLogin from "../services/userLoginService";
 
@@ -66,6 +66,10 @@ function Login(props) {
   const style = {
     // backgroundImage: `url(${process.env.PUBLIC_URL + '/image.png'})`
 
+    //marginTop: "7%",
+    paddingTop: "10%",
+    width: "100%",
+    height: "100%",
     backgroundImage: `url(${Background})`,
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
@@ -73,7 +77,7 @@ function Login(props) {
   };
 
   const formStyle = {
-    backgroundColor: "rgb(0, 0, 0, 0.7)",
+    backgroundColor: "rgb(0, 0, 0, 0.5)",
     padding: "50px 30px 50px 30px",
     color: "white",
     borderRadius: "20px",

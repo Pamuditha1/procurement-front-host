@@ -1,16 +1,14 @@
-import Main from './components/Main';
-import 'react-toastify/dist/ReactToastify.css'
+import Main from "./components/Main";
+import "react-toastify/dist/ReactToastify.css";
 import "rsuite/lib/styles/index.less";
-import Testing from './Testing'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
   return (
     <>
       <Main />
-      {/* <Testing /> */}
     </>
   );
 }
 
 export default App;
-

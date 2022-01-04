@@ -5,20 +5,19 @@ import * as Yup from "yup";
 import addUser from "../../services/addUser";
 
 function RegisterUserWValidation() {
+  const initialUser = {
+    username: "",
+    email: "",
+    contactNo: "",
+    contactNo2: "",
+    nic: "",
+    address: "",
+    type: "",
+    password: "",
+    repeatpassword: "",
+  };
   const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      contactNo: "",
-      contactNo2: "",
-      nic: "",
-      address: "",
-      type: "",
-      password: "",
-      repeatpassword: "",
-      district: "",
-    },
-    enableReinitialize: true,
+    initialValues: initialUser,
     validationSchema: Yup.object({
       username: Yup.string()
         .min(2, "Mininum 2 characters")
@@ -41,7 +40,6 @@ function RegisterUserWValidation() {
         .matches(/^([0-9]{9}[X|V]|[0-9]{12})$/, "Invalid NIC")
         .required("NIC is required."),
       address: Yup.string().required("Address is Required"),
-      district: Yup.string().required("district is Required"),
       type: Yup.string().required("User Type is Required"),
       password: Yup.string()
         .min(5, "Minimum 5 Characters")
@@ -50,9 +48,12 @@ function RegisterUserWValidation() {
         .oneOf([Yup.ref("password")], "Password's Not Match")
         .required("Repeat Password is Required"),
     }),
+    enableReinitialize: true,
     onSubmit: async (values) => {
-      console.log("F USer Data", values);
-      await addUser(values);
+      const success = await addUser(values);
+      if (success) {
+        formik.resetForm();
+      }
     },
   });
 
@@ -87,6 +88,7 @@ function RegisterUserWValidation() {
                   User Name
                 </label>
                 <input
+                  autocomplete="new-password"
                   onChange={formik.handleChange}
                   value={formik.values.username}
                   className="form-control col-11 ml-3"
@@ -111,6 +113,7 @@ function RegisterUserWValidation() {
                   type="text"
                   id="nic"
                   name="nic"
+                  placeholder="xxxxxxxxxV"
                 />
                 {formik.errors.nic && formik.touched.nic && (
                   <p className="ml-5 mt-2 text-danger">{formik.errors.nic}</p>
@@ -143,6 +146,7 @@ function RegisterUserWValidation() {
                   type="text"
                   id="contactNo"
                   name="contactNo"
+                  placeholder="07xxxxxxxx"
                 />
                 {formik.errors.contactNo && formik.touched.contactNo && (
                   <p className="ml-5 mt-2 text-danger">
@@ -161,6 +165,7 @@ function RegisterUserWValidation() {
                   type="text"
                   id="contactNo2"
                   name="contactNo2"
+                  placeholder="0xxxxxxxxxx"
                 />
                 {formik.errors.contactNo2 && formik.touched.contactNo2 && (
                   <p className="ml-5 mt-2 text-danger">
@@ -221,6 +226,7 @@ function RegisterUserWValidation() {
                   Password
                 </label>
                 <input
+                  autocomplete="new-password"
                   onChange={formik.handleChange}
                   value={formik.values.password}
                   className="form-control col-11 ml-3"

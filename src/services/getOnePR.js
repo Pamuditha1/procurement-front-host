@@ -4,9 +4,9 @@ import { api } from "./api";
 
 const apiEndPoint = `${api}/view-pr`;
 
-export default function getPRs() {
+export default function getOnePR(id) {
   return http
-    .get(apiEndPoint)
+    .get(`${apiEndPoint}/${id}`)
     .then(function (response) {
       return response.data;
     })

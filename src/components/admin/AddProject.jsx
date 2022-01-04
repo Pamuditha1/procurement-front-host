@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import addProject from "../../services/addProject";
 
 function AddProject() {
-  const [project, setproject] = useState({
+  const initialProject = {
     projectNo: "",
     name: "",
     location: "",
     type: "",
     client: "",
     clientCoNo: "",
-  });
-  const [error, seterror] = useState("")
-  const [typesList, settypeslist] = useState([
+  };
+  const [project, setproject] = useState(initialProject);
+  const [error] = useState("");
+  const typesList = [
     "Choose category",
     "Assembly",
     "Business",
@@ -23,16 +23,14 @@ function AddProject() {
     "Residential",
     "Storage",
     "Utility",
-  ]);
-  const [loading, setLoading] = useState(false);
-  const [allowSubmit, setallowSubmit] = useState(true);
+  ];
+  const [allowSubmit] = useState(true);
 
   const onchange = (e) => {
     setproject({
       ...project,
       [e.target.name]: e.target.value,
     });
-    // console.log(supplierData)
   };
   const onchangeSelectUnit = (e) => {
     setproject({
@@ -40,18 +38,11 @@ function AddProject() {
       type: e.target.value,
     });
   };
-  const reload = () => {
-    window.location.reload(false);
-  };
 
   const submit = async (e) => {
     e.preventDefault();
-    // setLoading(true);
-
-    await addProject(project);
-
-    console.log(project);
-    // setLoading(false);
+    const success = await addProject(project);
+    if (success) setproject(initialProject);
   };
 
   return (
@@ -156,7 +147,9 @@ function AddProject() {
                   name="clientCoNo"
                 />
               </div>
-              <p className="text-center" style={{ color: 'red' }}>{error}</p>
+              <p className="text-center" style={{ color: "red" }}>
+                {error}
+              </p>
               <div className="form-group col-12 mt-3">
                 <center>
                   <button

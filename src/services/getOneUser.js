@@ -2,11 +2,11 @@ import http from "./httpService";
 import { toast } from "react-toastify";
 import { api } from "./api";
 
-const apiEndPoint = `${api}/view-pr`;
+const apiEndPoint = `${api}/get-users`;
 
-export default function getPRs() {
+export default function getOneUser(id) {
   return http
-    .get(apiEndPoint)
+    .get(`${apiEndPoint}/${id}`)
     .then(function (response) {
       return response.data;
     })

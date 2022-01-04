@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
-import updateItem from "../../services/updateItem";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-function EditModal({ viewItem }) {
+import updateItem from "../../services/updateItem";
+import getOneItem from "../../services/getOneItem";
+
+function EditModal(props) {
   const [item, setitem] = useState({});
+  const { id } = useParams();
 
   useEffect(() => {
-    console.log(viewItem);
-    setitem(viewItem);
-  }, [viewItem]);
+    async function fetchItem() {
+      const results = await getOneItem(id);
+      setitem(results);
+    }
 
-  const [units, setunits] = useState([
+    fetchItem();
+  }, [id]);
+
+  const [units] = useState([
     "Choose Unit",
     "Bags",
     "Cubes",
@@ -19,12 +26,10 @@ function EditModal({ viewItem }) {
   ]);
 
   const onchange = (e) => {
-    console.log("run");
     setitem({
       ...item,
       [e.target.name]: e.target.value,
     });
-    // console.log(supplierData)
   };
   const onchangeSelectUnit = (e) => {
     setitem({
@@ -35,11 +40,7 @@ function EditModal({ viewItem }) {
 
   const submit = async (e) => {
     e.preventDefault();
-    // setLoading(true);
-    await updateItem(item);
-    // // addProduct(customerData)
-    console.log("Update", item);
-    // setLoading(false);
+    updateItem(item).then(() => props.history.push("/admin/items"));
   };
   return (
     <div>

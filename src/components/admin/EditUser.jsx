@@ -1,18 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
 import updateUser from "../../services/updateUser";
 import removeeUser from "../../services/removeUser";
+import getOneUser from "../../services/getOneUser";
 
-function EditUser({ selectedUser, history }) {
+function EditUser({ history }) {
   const [user, setuser] = useState({});
+  const { id } = useParams();
+
   const [passData, setpassData] = useState({
     password: "",
     passwordT: "",
     passwordr: "",
     passError: "",
   });
+
+  useEffect(() => {
+    async function fetchUsers() {
+      const results = await getOneUser(id);
+      setuser(results);
+    }
+    fetchUsers();
+  }, [id]);
+
   const onchangePassword = (e) => {
-    if (e.target.name == "password") {
+    if (e.target.name === "password") {
       setpassData({
         ...passData,
         passwordT: e.target.value,
@@ -20,8 +33,8 @@ function EditUser({ selectedUser, history }) {
       return;
     }
 
-    if (e.target.name == "passwordr") {
-      if (e.target.value == passData.passwordT) {
+    if (e.target.name === "passwordr") {
+      if (e.target.value === passData.passwordT) {
         setpassData({
           ...passData,
           password: e.target.value,
@@ -40,37 +53,25 @@ function EditUser({ selectedUser, history }) {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedUser);
-    setuser(selectedUser);
-  }, []);
-
   const onchange = (e) => {
-    console.log("Cuu User", user);
     setuser({
       ...user,
       [e.target.name]: e.target.value,
     });
-    // console.log(supplierData)
   };
 
   const removeUser = async (id) => {
-    console.log("Remove id", id);
     await removeeUser(id);
     history.push("/admin/view-users");
   };
 
   const submit = async (e) => {
     e.preventDefault();
-    // setLoading(true);
-    // await updateUser(item);
     let update = {
       user: user,
       pass: passData.password,
     };
-    console.log("Update", update);
     await updateUser(update);
-    // setLoading(false);
   };
   return (
     <div>
@@ -98,6 +99,8 @@ function EditUser({ selectedUser, history }) {
                   Name
                 </label>
                 <input
+                  autocomplete="new-password"
+                  autoFocus="off"
                   onChange={onchange}
                   value={user.username}
                   className="form-control col-11 ml-3"
@@ -150,6 +153,7 @@ function EditUser({ selectedUser, history }) {
                   New Password
                 </label>
                 <input
+                  autocomplete="new-password"
                   onChange={onchangePassword}
                   value={passData.passwordT}
                   className="form-control col-11 ml-3"

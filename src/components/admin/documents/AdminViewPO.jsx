@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button } from "reactstrap";
+import { Table } from "reactstrap";
 import { Link } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import Loader from "react-loader-spinner";
 
 import getPOs from "../../../services/getPOs";
-import AdminViewPOItems from "./AdminViewPOItems";
 
-function AdminViewPO({ viewItems }) {
+function AdminViewPO() {
   const [pos, setpos] = useState([]);
-
-  const [isModalOpen, setisModalOpen] = useState(false);
-  const [modalItems, setmodalItems] = useState([]);
-  let userID = "";
-  const jwt = localStorage.getItem("token");
-  if (jwt) {
-    userID = jwtDecode(jwt)._id;
-  } else {
-    userID = "";
-  }
 
   useEffect(() => {
     async function fetchMSRs() {
@@ -28,92 +17,83 @@ function AdminViewPO({ viewItems }) {
     fetchMSRs();
   }, []);
 
-  const viewModal = (p) => {
-    viewItems(p);
-    console.log("clicked");
-    setmodalItems(p.items);
-    // setisModalOpen(true);
-  };
-
   return (
-    <div>
-      <div className="row">
-        <Link to="/admin/documents">
-          <button className="btn btn-outline-dark">Back</button>
-        </Link>
-      </div>
-      <h6
-        className="pl-5 pt-1 pb-1 mb-5 mt-4"
-        style={{ backgroundColor: "gray" }}
-      >
-        PO List
-      </h6>
+    <>
+      {pos.length === 0 ? (
+        <div className="container text-center" style={{ width: "793px" }}>
+          <Loader
+            type="Puff"
+            color="#050A30"
+            height={100}
+            width={100}
+            timeout={5000}
+          />
+        </div>
+      ) : (
+        <div>
+          <h6
+            className="pl-5 pt-1 pb-1 mb-5 mt-4"
+            style={{ backgroundColor: "gray" }}
+          >
+            PO List
+            <Link to="/admin/documents" style={{ marginLeft: "80%" }}>
+              <button className="btn btn-outline-light">Back</button>
+            </Link>
+          </h6>
 
-      <Table hover borderless>
-        <thead className="text-center">
-          <tr>
-            <th>View</th>
-            <th>Status</th>
-            <th>PO No</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Created</th>
-            <th>Confirmed/ Rejected</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {pos.map((p) => {
-            // setsubTotal(subTotal + p.user.total)
-
-            return (
-              <tr style={{ textAlign: "center" }} key={p._id}>
-                <td>
-                  <Link to="/admin/documents/pos/items">
-                    <button
-                      onClick={() => viewModal(p)}
-                      className="btn btn-primary"
-                    >
-                      View
-                    </button>
-                  </Link>
-                </td>
-                <td
-                  className="text-center"
-                  className={
-                    p.status == "Confirmed"
-                      ? "text-success"
-                      : p.status == "Rejected"
-                      ? "text-danger"
-                      : p.status == "Recreated" && "text-primary"
-                  }
-                >
-                  {p.status}
-                </td>
-                <td className="text-center">{p.poNo}</td>
-                <td className="text-center">
-                  {new Date(p.timeStamp).toLocaleDateString()}
-                </td>
-                <td className="text-center">
-                  {new Date(p.timeStamp).toLocaleTimeString()}
-                </td>
-                <td className="text-center">{p.createdBy.username}</td>
-                <td className="text-center">
-                  {p.approvedBy ? p.approvedBy.username : "Pending..."}
-                </td>
+          <Table hover borderless>
+            <thead className="text-center">
+              <tr>
+                <th>View</th>
+                <th>Status</th>
+                <th>PO No</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Created</th>
+                <th>Confirmed/ Rejected</th>
+                <th></th>
               </tr>
-            );
-          })}
-          {/* <tr>
-            <ViewMSRItems
-              isModalOpen={isModalOpen}
-              setisModalOpen={setisModalOpen}
-              msrs={modalItems}
-            />
-          </tr> */}
-        </tbody>
-      </Table>
-    </div>
+            </thead>
+            <tbody>
+              {pos.map((p) => {
+                return (
+                  <tr style={{ textAlign: "center" }} key={p._id}>
+                    <td>
+                      <Link to={`/admin/documents/po/${p._id}`}>
+                        <button className="btn btn-primary">View</button>
+                      </Link>
+                    </td>
+                    <td
+                      className={
+                        p.status === "Confirmed"
+                          ? "text-success text-center"
+                          : p.status === "Rejected"
+                          ? "text-danger text-center"
+                          : p.status === "Recreated" &&
+                            "text-primary text-center"
+                      }
+                    >
+                      {p.status}
+                    </td>
+                    <td className="text-center">{p.poNo}</td>
+                    <td className="text-center">
+                      {new Date(p.timeStamp).toLocaleDateString()}
+                    </td>
+                    <td className="text-center">
+                      {new Date(p.timeStamp).toLocaleTimeString()}
+                    </td>
+                    <td className="text-center">{p.createdBy.username}</td>
+                    <td className="text-center">
+                      {p.approvedBy ? p.approvedBy.username : "Pending..."}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
+      )}
+    </>
   );
 }
 

@@ -7,10 +7,9 @@ import {
   faUsers,
   faUserPlus,
   faBuilding,
-  faTools,
   faPencilRuler,
   faFileInvoice,
-  faChartLine
+  faChartLine,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Badge } from "reactstrap";
@@ -28,11 +27,13 @@ function AdminSidebar() {
       const results = await getItems();
       let count = 0;
       results.forEach((r) => {
-        if ((parseInt(r.quantity) <= parseInt(r.reorderL)) && r.projects.length > 0) {
+        if (
+          parseInt(r.quantity) <= parseInt(r.reorderL) &&
+          r.projects.length > 0
+        ) {
           count = count + 1;
         }
       });
-      //   console.log(results);
       setreorderItems(count);
     }
 
@@ -58,7 +59,7 @@ function AdminSidebar() {
         <p
           onClick={onClick}
           id="docs"
-          style={clicked == "docs" ? onClickStyle : s}
+          style={clicked === "docs" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faFileInvoice} size="2x" />
@@ -70,7 +71,7 @@ function AdminSidebar() {
         <p
           onClick={onClick}
           id="stock"
-          style={clicked == "stock" ? onClickStyle : s}
+          style={clicked === "stock" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faCubes} size="2x" />
@@ -87,7 +88,7 @@ function AdminSidebar() {
         <p
           onClick={onClick}
           id="supp"
-          style={clicked == "supp" ? onClickStyle : s}
+          style={clicked === "supp" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faPeopleCarry} size="2x" />
@@ -99,7 +100,7 @@ function AdminSidebar() {
         <p
           onClick={onClick}
           id="inven"
-          style={clicked == "inven" ? onClickStyle : s}
+          style={clicked === "inven" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faPencilRuler} size="2x" />
@@ -111,7 +112,7 @@ function AdminSidebar() {
         <p
           onClick={onClick}
           id="view-project"
-          style={clicked == "view-project" ? onClickStyle : s}
+          style={clicked === "view-project" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faBuilding} size="2x" />
@@ -123,7 +124,7 @@ function AdminSidebar() {
         <p
           onClick={onClick}
           id="add-item"
-          style={clicked == "add-item" ? onClickStyle : s}
+          style={clicked === "add-item" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faPlusCircle} size="2x" />
@@ -136,7 +137,7 @@ function AdminSidebar() {
         <p
           onClick={onClick}
           id="add-project"
-          style={clicked == "add-project" ? onClickStyle : s}
+          style={clicked === "add-project" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faPlusCircle} size="2x" />
@@ -149,7 +150,7 @@ function AdminSidebar() {
         <p
           onClick={onClick}
           id="reports"
-          style={clicked == "reports" ? onClickStyle : s}
+          style={clicked === "reports" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faChartLine} size="2x" />
@@ -161,7 +162,7 @@ function AdminSidebar() {
         <p
           onClick={onClick}
           id="view-user"
-          style={clicked == "view-user" ? onClickStyle : s}
+          style={clicked === "view-user" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faUsers} size="2x" />
@@ -173,7 +174,7 @@ function AdminSidebar() {
         <p
           onClick={onClick}
           id="add-user"
-          style={clicked == "add-user" ? onClickStyle : s}
+          style={clicked === "add-user" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faUserPlus} size="2x" />

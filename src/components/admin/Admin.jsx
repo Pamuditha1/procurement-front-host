@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, Route, Switch, Link } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import { Route, Switch } from "react-router-dom";
 
 import AdminSidebar from "./AdminSidebar";
-// import ViewMSR from "./ViewMSR";
-// import ViewMSRItems from "./viewMSRItems";
-
-import updateMSR from "../../services/updateMSR";
-import RegisterUser from "./RegisterUsers";
-import RegisterSupplier from "./RegisterSupplier";
 import AddItems from "./AddItems";
 import ViewItems from "./ViewItems";
 import EditModal from "./EditModal";
@@ -36,41 +29,12 @@ function Admin() {
   useEffect(() => {
     document.title = "Administrator";
   }, []);
-  const [modalItem, setmodalItem] = useState({});
   const [selectedUser, setselectedUser] = useState([]);
-  const [selectedMSR, setselectedMSR] = useState({});
-  const [selectedPR, setselectedPR] = useState({});
-  const [selectedPO, setselectedPO] = useState({});
-  const [selectedGRN, setselectedGRN] = useState({});
-  const [selectedDU, setselectedDU] = useState({});
 
-  const jwt = localStorage.getItem("token");
-  const userID = jwtDecode(jwt)._id;
-
-  const viewItem = (item) => {
-    // setisModalOpen(true);
-    setmodalItem(item);
-  };
   const viewUser = (user) => {
-    // setisModalOpen(true);
     setselectedUser(user);
   };
 
-  const viewMSR = (p) => {
-    setselectedMSR(p);
-  };
-  const viewPR = (p) => {
-    setselectedPR(p);
-  };
-  const viewPO = (p) => {
-    setselectedPO(p);
-  };
-  const viewGRN = (p) => {
-    setselectedGRN(p);
-  };
-  const viewDU = (p) => {
-    setselectedDU(p);
-  };
   return (
     <div>
       <div className="row">
@@ -79,12 +43,10 @@ function Admin() {
         </div>
         <div className="container col-10">
           <Switch>
-            {/* <Route path="/admin/register-user" component={RegisterUser} /> */}
             <Route
               path="/admin/register-user"
               component={RegisterUserWValidation}
             />
-            {/* <Route path="/admin/view-users" component={ViewUsers} /> */}
             <Route
               exact
               path="/admin/view-users"
@@ -98,126 +60,53 @@ function Admin() {
             />
             <Route
               exact
-              path="/admin/edit-user"
+              path="/admin/edit-user/:id"
               render={(props) => (
                 <EditUser selectedUser={selectedUser} {...props} />
               )}
             />
             <Route path="/admin/add-item" component={AddItems} />
-            {/* <Route path="/admin/inventory" component={ViewInventory} /> */}
-            <Route
-              exact
-              path="/admin/items"
-              render={(props) => <ViewItems viewItem={viewItem} {...props} />}
-            />
-            <Route
-              path="/admin/items/edit"
-              render={(props) => <EditModal viewItem={modalItem} {...props} />}
-            />
-            <Route
-              path="/admin/add-project"
-              render={(props) => <AddProject {...props} />}
-            />
-            <Route
-              exact
-              path="/admin/stock"
-              render={(props) => <ViewStock {...props} />}
-            />
-            <Route
-              exact
-              path="/admin/suppliers"
-              render={(props) => <ViewSuppliers {...props} />}
-            />
-            <Route
-              exact
-              path="/admin/projects"
-              render={(props) => <ViewProjects {...props} />}
-            />
+            <Route exact path="/admin/items" component={ViewItems} />
+            <Route path="/admin/items/edit/:id" component={EditModal} />
+            <Route path="/admin/add-project" component={AddProject} />
+            <Route exact path="/admin/stock" component={ViewStock} />
+            <Route exact path="/admin/suppliers" component={ViewSuppliers} />
+            <Route exact path="/admin/projects" component={ViewProjects} />
             <Route exact path="/admin/documents" component={ViewDocuments} />
             <Route
               exact
               path="/admin/documents/msrs"
-              render={(props) => (
-                <AdminViewMSR viewItems={viewMSR} {...props} />
-              )}
+              component={AdminViewMSR}
             />
             <Route
-              path="/admin/documents/msrs/items"
-              render={(props) => (
-                <AdminViewMSRItems
-                  viewItems={viewMSR}
-                  selectedMSR={selectedMSR}
-                  {...props}
-                />
-              )}
+              path="/admin/documents/msr/:id"
+              component={AdminViewMSRItems}
             />
+            <Route exact path="/admin/documents/prs" component={AdminViewPR} />
             <Route
-              exact
-              path="/admin/documents/prs"
-              render={(props) => <AdminViewPR viewItems={viewPR} {...props} />}
+              path="/admin/documents/pr/:id"
+              component={AdminViewPRItems}
             />
+            <Route exact path="/admin/documents/pos" component={AdminViewPO} />
             <Route
-              path="/admin/documents/prs/items"
-              render={(props) => (
-                <AdminViewPRItems
-                  viewItems={viewPR}
-                  selectedPR={selectedPR}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/admin/documents/pos"
-              render={(props) => <AdminViewPO viewItems={viewPO} {...props} />}
-            />
-            <Route
-              path="/admin/documents/pos/items"
-              render={(props) => (
-                <AdminViewPOItems
-                  viewItems={viewPO}
-                  selectedPO={selectedPO}
-                  {...props}
-                />
-              )}
+              path="/admin/documents/po/:id"
+              component={AdminViewPOItems}
             />
             <Route
               exact
               path="/admin/documents/grns"
-              render={(props) => (
-                <AdminViewGRN viewItems={viewGRN} {...props} />
-              )}
+              component={AdminViewGRN}
             />
             <Route
-              path="/admin/documents/grns/items"
-              render={(props) => (
-                <AdminViewGRNItems
-                  viewItems={viewGRN}
-                  selectedGRN={selectedGRN}
-                  {...props}
-                />
-              )}
+              path="/admin/documents/grn/:id"
+              component={AdminViewGRNItems}
             />
+            <Route exact path="/admin/documents/dus" component={AdminViewDU} />
             <Route
-              exact
-              path="/admin/documents/dus"
-              render={(props) => <AdminViewDU viewItems={viewDU} {...props} />}
+              path="/admin/documents/du/:id"
+              component={AdminViewDUItems}
             />
-            <Route
-              path="/admin/documents/dus/items"
-              render={(props) => (
-                <AdminViewDUItems
-                  viewItems={viewDU}
-                  selectedDU={selectedDU}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              path="/admin/reports"
-              exact
-              component={Reports}
-            />
+            <Route path="/admin/reports" exact component={Reports} />
           </Switch>
         </div>
       </div>

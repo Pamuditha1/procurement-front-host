@@ -1,25 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import addItem from "../../services/addItem";
 
 function AddItems() {
-  const [item, setitem] = useState({
+  const initialItem = {
     code: "",
     name: "",
     unit: "",
     qty: 0,
     reorderL: "",
-  });
-  const [error, seterror] = useState("")
-  const [units, setunits] = useState([
-    "Choose Unit",
-    "Bags",
-    "Cubes",
-    "Numbers",
-    "Litres",
-  ]);
-  const [loading, setLoading] = useState(false);
-  const [allowSubmit, setallowSubmit] = useState(true);
+  };
+  const [item, setitem] = useState(initialItem);
+  const [error, seterror] = useState("");
+  const units = ["Choose Unit", "Bags", "Cubes", "Numbers", "Litres", "Pieces"];
+  const [allowSubmit] = useState(true);
 
   const onchange = (e) => {
     setitem({
@@ -33,22 +26,16 @@ function AddItems() {
       unit: e.target.value,
     });
   };
-  const reload = () => {
-    window.location.reload(false);
-  };
 
   const submit = async (e) => {
     e.preventDefault();
-    // setLoading(true);
     if (/[0-9]/.test(item.code)) {
-      await addItem(item);
-      seterror("")
+      const success = await addItem(item);
+      if (success) setitem(initialItem);
+      seterror("");
+    } else {
+      seterror("Invalid Item Code");
     }
-    else {
-      seterror("Invalid Item Code")
-    }
-    console.log(item);
-    // setLoading(false);
   };
 
   return (
@@ -127,7 +114,9 @@ function AddItems() {
                   name="reorderL"
                 />
               </div>
-              <p className="text-center" style={{ color: 'red' }}>{error}</p>
+              <p className="text-center" style={{ color: "red" }}>
+                {error}
+              </p>
               <div className="form-group col-12 mt-3">
                 <center>
                   <button
