@@ -3,7 +3,6 @@ import { Table, Button, Badge } from "reactstrap";
 import jwtDecode from "jwt-decode";
 
 import createUsage from "../../services/createDailyReport";
-import getSuppliers from "../../services/getSuppliers";
 import getItems from "../../services/getItems";
 import getNo from "../../services/getNoService";
 import getProjects from "../../services/getProjects";
@@ -15,14 +14,7 @@ function CreateDailyUsage() {
   });
   const [reportItems, setreportItems] = useState([]);
   const [projects, setprojects] = useState([]);
-  const [units, setunits] = useState([
-    "Choose Unit",
-    "Bags",
-    "Kg",
-    "Cubes",
-    "Numbers",
-    "Nos",
-  ]);
+  const units = ["Choose Unit", "Bags", "Cubes", "Numbers", "Litres", "Pieces"];
   const [readProject, setreadProject] = useState(false);
 
   const [reportItem, setreportItem] = useState({
@@ -45,22 +37,14 @@ function CreateDailyUsage() {
       pro.push({ name: r.name, id: r._id });
     });
     setprojects(pro);
-    console.log(projects);
   }
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const [loading, setLoading] = useState(false);
-
   const search = async (e) => {
     if (e.key === "Enter") {
-      // if (searchItem.trim() == "") {
-      //   const results = await getItems();
-      //   setsearchResults(results);
-      //   return;
-      // }
       let items = await getItems();
       let searched = items.filter((i) => {
         if (
@@ -68,8 +52,8 @@ function CreateDailyUsage() {
           i.code.toLowerCase().includes(searchItem.toLowerCase())
         )
           return true;
+        return false;
       });
-      console.log("SR", searched);
       setsearchResults(searched);
     }
   };
@@ -94,13 +78,9 @@ function CreateDailyUsage() {
       ...reportItem,
       [e.target.name]: e.target.value,
     });
-    // console.log(customerData)
   };
   const changeNoAProject = (e) => {
     setreportData({ ...reportData, [e.target.name]: e.target.value });
-  };
-  const reload = () => {
-    window.location.reload(false);
   };
 
   const onAdd = () => {
@@ -128,7 +108,8 @@ function CreateDailyUsage() {
   const removeFromTable = (i) => {
     let list = reportItems;
     let filtered = list.filter((p) => {
-      if (p.no != i.no) return true;
+      if (p.no !== i.no) return true;
+      return false;
     });
     setreportItems(filtered);
   };
@@ -144,7 +125,6 @@ function CreateDailyUsage() {
       userID: userID,
       reportData: reportData,
     };
-    console.log(report);
     await createUsage(report);
     fetchData();
     setsearchItem("");
@@ -153,7 +133,6 @@ function CreateDailyUsage() {
   };
 
   const addselected = (s) => {
-    console.log("selected", s);
     setreportItem({
       ...reportItem,
       id: s._id,
@@ -339,14 +318,11 @@ function CreateDailyUsage() {
               <th>Unit</th>
               <th>Quantity</th>
               <th>Remarks</th>
-              {/* <th>Supplier</th> */}
               <th></th>
             </tr>
           </thead>
           <tbody>
             {reportItems.map((p, index) => {
-              // setsubTotal(subTotal + p.user.total)
-
               return (
                 <tr key={p.description}>
                   <td className="text-center">
@@ -364,9 +340,6 @@ function CreateDailyUsage() {
                   <td className="text-center">
                     <strong>{p.remarks}</strong>
                   </td>
-                  {/* <td className="text-center">
-                    <strong>{p.supplier}</strong>
-                  </td> */}
                   <td>
                     <Button color="danger" onClick={() => removeFromTable(p)}>
                       {" "}

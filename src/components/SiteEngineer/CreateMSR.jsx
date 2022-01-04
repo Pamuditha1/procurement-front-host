@@ -3,7 +3,6 @@ import { Table, Button, Badge } from "reactstrap";
 import jwtDecode from "jwt-decode";
 
 import createMSR from "../../services/createMSRservice";
-import getSuppliers from "../../services/getSuppliers";
 import getItems from "../../services/getItems";
 import getNo from "../../services/getNoService";
 import getProjects from "../../services/getProjects";
@@ -11,18 +10,11 @@ import getProjects from "../../services/getProjects";
 function CreateMSR() {
   const [msrData, setmsrData] = useState({
     msrNo: "",
-    project: "60ee6d5ddb3fac3b84fa8158",
+    project: "",
   });
   const [msr, setmsr] = useState([]);
   const [projects, setprojects] = useState([]);
-  const [units, setunits] = useState([
-    "Choose Unit",
-    "Bags",
-    "Kg",
-    "Cubes",
-    "Numbers",
-    "Nos",
-  ]);
+  const units = ["Choose Unit", "Bags", "Cubes", "Numbers", "Litres", "Pieces"];
   const [readProject, setreadProject] = useState(false);
 
   const [msrItem, setmsrItem] = useState({
@@ -43,27 +35,18 @@ function CreateMSR() {
 
     let pro = [{ name: "Choose Project", id: "01" }];
     let result = await getProjects();
-    console.log("Pro result", result);
     result.forEach((r) => {
-      pro.push({ name: r.name, id: r._id });
+      pro.push({ name: r.name, id: r._id, projectNo: r.projectNo });
     });
     setprojects(pro);
-    console.log(projects);
   }
 
   useEffect(() => {
     fetchSupp();
   }, []);
 
-  const [loading, setLoading] = useState(false);
-
   const search = async (e) => {
     if (e.key === "Enter") {
-      // if (searchItem.trim() == "") {
-      //   const results = await getItems();
-      //   setsearchResults(results);
-      //   return;
-      // }
       let items = await getItems();
       let searched = items.filter((i) => {
         if (
@@ -71,8 +54,8 @@ function CreateMSR() {
           i.code.includes(searchItem.toLowerCase())
         )
           return true;
+        return false;
       });
-      console.log("SR", searched);
       setsearchResults(searched);
     }
   };
@@ -97,13 +80,9 @@ function CreateMSR() {
       ...msrItem,
       [e.target.name]: e.target.value,
     });
-    // console.log(customerData)
   };
   const changeNoAProject = (e) => {
     setmsrData({ ...msrData, [e.target.name]: e.target.value });
-  };
-  const reload = () => {
-    window.location.reload(false);
   };
 
   const onAdd = () => {
@@ -132,14 +111,13 @@ function CreateMSR() {
   const removeFromTable = (i) => {
     let list = msr;
     let filtered = list.filter((p) => {
-      if (p.no != i.no) return true;
+      if (p.no !== i.no) return true;
+      return false;
     });
     setmsr(filtered);
   };
 
   const submit = async (e) => {
-    console.log(msr);
-
     const jwt = localStorage.getItem("token");
     const userID = jwtDecode(jwt)._id;
 
@@ -148,20 +126,12 @@ function CreateMSR() {
       userID: userID,
       msrData: msrData,
     };
-    console.log(msrOrder);
     await createMSR(msrOrder);
     fetchSupp();
     setmsr([]);
-    // e.preventDefault();
-    // setLoading(true);
-    // await registerSupplier(msrItem);
-    // // addProduct(customerData)
-    // console.log(msrItem);
-    // setLoading(false);
   };
 
   const addselected = (s) => {
-    console.log("selected", s);
     setmsrItem({
       ...msrItem,
       id: s._id,
@@ -212,20 +182,11 @@ function CreateMSR() {
                 value={option.id}
                 style={{ textAlign: "center" }}
               >
-                {option.name}
+                {option.projectNo} - {option.name}
               </option>
             );
           })}
         </select>
-        {/* <input
-          readOnly={readProject}
-          onChange={changeNoAProject}
-          value={msrData.project}
-          className="form-control col-11 ml-3"
-          type="text"
-          id="project"
-          name="project"
-        /> */}
       </div>
 
       <input
@@ -293,9 +254,6 @@ function CreateMSR() {
               <div className="form-group col-6">
                 <label htmlFor="quantity" className="col-5">
                   Quantity{" "}
-                  {/* <strong>
-                    {msrItem.avaiQyt && `(Avai - ${msrItem.avaiQyt} )`}
-                  </strong> */}
                 </label>
                 <input
                   onChange={onchange}
@@ -352,14 +310,11 @@ function CreateMSR() {
               <th>Unit</th>
               <th>Quantity</th>
               <th>Remarks</th>
-              {/* <th>Supplier</th> */}
               <th></th>
             </tr>
           </thead>
           <tbody>
             {msr.map((p, index) => {
-              // setsubTotal(subTotal + p.user.total)
-
               return (
                 <tr key={p.description}>
                   <td className="text-center">
@@ -377,9 +332,6 @@ function CreateMSR() {
                   <td className="text-center">
                     <strong>{p.remarks}</strong>
                   </td>
-                  {/* <td className="text-center">
-                    <strong>{p.supplier}</strong>
-                  </td> */}
                   <td>
                     <Button color="danger" onClick={() => removeFromTable(p)}>
                       {" "}

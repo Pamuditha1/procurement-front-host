@@ -28,23 +28,12 @@ function CreateGRN({ poData }) {
     let list = grnsList;
     list.push(item);
     setgrnsList(list);
-    if (poData.items.length == grnsList.length) {
+    if (poData.items.length === grnsList.length) {
       setletSubmit(true);
     }
-    console.log("GRN List", grnsList);
   };
 
-  function calculateGRNTotal() {
-    console.log(poData);
-  }
-
   const submitGRN = async () => {
-    console.log("MSR", poData.msr._id);
-    console.log("PR", poData.pr._id);
-    console.log("PO", poData._id);
-    console.log("GRN Items", grnsList);
-
-    calculateGRNTotal();
     const jwt = localStorage.getItem("token");
     const userID = jwtDecode(jwt)._id;
 
@@ -64,14 +53,9 @@ function CreateGRN({ poData }) {
       supplierName: poData.supplier.username,
       projectID: poData.msr.project._id,
     };
-    console.log(grnData);
     await createGRN(grnData);
   };
 
-  const remarksStyle = {
-    maxWidth: "200px",
-    maxHeight: "200px",
-  };
   return (
     <div className="mt-5">
       <h6

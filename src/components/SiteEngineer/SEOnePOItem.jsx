@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-function SEOnePOItem({ p, index, changeOneItem, adtoGRNlist }) {
+function SEOnePOItem({ p, index, adtoGRNlist }) {
   const [item, setitem] = useState({});
-  const [addedList, setaddedList] = useState(["a"]);
   const [onClicled, setonClicled] = useState(false);
-  // const [added, setadded] = useState(false);
 
   useEffect(() => {
     setitem({
-      // id:
       description: p.item.description,
       unit: p.item.unit,
       quantity: p.item.quantity,
@@ -16,7 +13,7 @@ function SEOnePOItem({ p, index, changeOneItem, adtoGRNlist }) {
       note: "",
       rate: p.rateAamount.rate,
     });
-  }, []);
+  }, [p]);
 
   const onChange = (e) => {
     setitem({ ...item, [e.target.name]: e.target.value });
@@ -24,11 +21,6 @@ function SEOnePOItem({ p, index, changeOneItem, adtoGRNlist }) {
   const addItemToGRN = () => {
     adtoGRNlist(item);
     setonClicled(true);
-    // changeOneItem(item);
-    // let added = addedList;
-    // added.push(item.description);
-    // setaddedList(added);
-    // console.log(added);
   };
   const qtyStyle = {
     maxWidth: "50px",

@@ -17,13 +17,7 @@ function EditModal(props) {
     fetchItem();
   }, [id]);
 
-  const [units] = useState([
-    "Choose Unit",
-    "Bags",
-    "Cubes",
-    "Numbers",
-    "liters",
-  ]);
+  const units = ["Choose Unit", "Bags", "Cubes", "Numbers", "Litres", "Pieces"];
 
   const onchange = (e) => {
     setitem({

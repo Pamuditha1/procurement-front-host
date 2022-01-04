@@ -7,7 +7,7 @@ import createMSR from "../../services/createMSRservice";
 import updateRecreatedMSR from "../../services/recreateMSR";
 import getNo from "../../services/getNoService";
 
-function EditMSR({ newMSR, selectedMSR, removeFromPR, oneMSR }) {
+function EditMSR({ newMSR, removeFromPR, oneMSR }) {
   const [msrNo, setmsrNo] = useState("");
   const remarksStyle = {
     maxWidth: "200px",
@@ -23,13 +23,7 @@ function EditMSR({ newMSR, selectedMSR, removeFromPR, oneMSR }) {
     }
     fetchNo();
   }, []);
-  //   console.log(selectedMSR);
   const submitNewMSR = async () => {
-    // let msrS = {
-    //   newMSR,
-    //   msr: oneMSR,
-    //   user: userID,
-    // };
     let msrS = {
       msr: newMSR,
       userID: userID,
@@ -38,7 +32,6 @@ function EditMSR({ newMSR, selectedMSR, removeFromPR, oneMSR }) {
         msrNo: msrNo,
       },
     };
-    console.log(msrS);
     await createMSR(msrS);
     await updateRecreatedMSR({
       id: oneMSR._id,
@@ -51,7 +44,7 @@ function EditMSR({ newMSR, selectedMSR, removeFromPR, oneMSR }) {
   return (
     <div className="mt-5">
       <div className="row mt-5 mb-5" style={{ textAlign: "center" }}>
-        Create MSR
+        <b>Create MSR</b>
       </div>
       <div className="form-group row ml-3">
         <label htmlFor="msrNo" className="col-2">
@@ -74,14 +67,11 @@ function EditMSR({ newMSR, selectedMSR, removeFromPR, oneMSR }) {
             <th>Unit</th>
             <th>Quantity</th>
             <th>Remarks</th>
-            {/* <th>Supplier</th> */}
             <th></th>
           </tr>
         </thead>
         <tbody>
           {newMSR.map((p, index) => {
-            // setsubTotal(subTotal + p.user.total)
-
             return (
               <tr key={index}>
                 <td className="text-center">
@@ -93,7 +83,6 @@ function EditMSR({ newMSR, selectedMSR, removeFromPR, oneMSR }) {
                 <td className="text-center" style={remarksStyle}>
                   {p.remarks}
                 </td>
-                {/* <td className="text-center">{p.supplier}</td> */}
                 <td>
                   <Button
                     onClick={() => remove(p.no)}

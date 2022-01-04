@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { faPlusCircle, faStickyNote } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Badge } from "reactstrap";
 import "../../css/sideBar.css";
+
 import ShowUser from "../ShowUser";
-import getMSRsCount from "../../services/getMSRScount";
 import getRejectedMSRCount from "../../services/getRejectedMSRCount";
 import getPOsCount from "../../services/getConfirmedPOCount";
+
 import msr from "../../icons/msr2.png";
 import msrB from "../../icons/msr2B.png";
 import du from "../../icons/du2.png";
@@ -16,7 +17,6 @@ import po from "../../icons/po2.png";
 import poB from "../../icons/po2B.png";
 import grn from "../../icons/grn2.png";
 import grnB from "../../icons/grn2B.png";
-// import getOrdersCount from "../services/getOrdersCount";
 
 function SESidebar(props) {
   const [clicked, setclicked] = useState("");
@@ -31,9 +31,6 @@ function SESidebar(props) {
       setnumOfOrders(count);
       setconfirmedPOCount(poCount);
     }, 5000);
-
-    // let count = await getOrdersCount()
-    // setnumOfOrders(count)
   }, []);
 
   const onClickStyle = {
@@ -49,7 +46,6 @@ function SESidebar(props) {
     setclicked(e.target.id);
     console.log(clicked);
   };
-  const logoColorClicked = {};
   const logoColor = {
     color: "white",
   };
@@ -61,19 +57,20 @@ function SESidebar(props) {
         <p
           onClick={onClick}
           id="create-msr"
-          style={clicked == "create-msr" ? onClickStyle : s}
+          style={clicked === "create-msr" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon
               icon={faPlusCircle}
               size="1x"
-              style={clicked == "create-msr" ? onClickStyle : logoColor}
+              style={clicked === "create-msr" ? onClickStyle : logoColor}
             />
             <img
-              src={clicked == "create-msr" ? msrB : msr}
+              src={clicked === "create-msr" ? msrB : msr}
               height="35px"
               width="35px"
               className="ml-1"
+              alt="msr"
             />
           </span>
           Create MSR
@@ -83,19 +80,20 @@ function SESidebar(props) {
         <p
           onClick={onClick}
           id="usage"
-          style={clicked == "usage" ? onClickStyle : s}
+          style={clicked === "usage" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <FontAwesomeIcon
               icon={faPlusCircle}
               size="1x"
-              style={clicked == "usage" ? onClickStyle : logoColor}
+              style={clicked === "usage" ? onClickStyle : logoColor}
             />
             <img
-              src={clicked == "usage" ? duB : du}
+              src={clicked === "usage" ? duB : du}
               height="25px"
               width="25px"
               className="ml-1"
+              alt="du"
             />
           </span>
           Daily Usage
@@ -106,16 +104,14 @@ function SESidebar(props) {
         <p
           onClick={onClick}
           id="view-msr"
-          style={clicked == "view-msr" ? onClickStyle : s}
+          style={clicked === "view-msr" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
-            {/* <FontAwesomeIcon icon={faStickyNote} size="2x" /> */}
-
             <img
-              src={msr}
               height="35px"
               width="35px"
-              src={clicked == "view-msr" ? msrB : msr}
+              src={clicked === "view-msr" ? msrB : msr}
+              alt="msr"
             />
           </span>
           View MSR
@@ -131,16 +127,14 @@ function SESidebar(props) {
         <p
           onClick={onClick}
           id="view-po"
-          style={clicked == "view-po" ? onClickStyle : s}
+          style={clicked === "view-po" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
-            {/* <FontAwesomeIcon icon={faStickyNote} size="2x" /> */}
-
             <img
-              src={msr}
               height="30px"
               width="30px"
-              src={clicked == "view-po" ? poB : po}
+              src={clicked === "view-po" ? poB : po}
+              alt="po"
             />
           </span>
           View PO
@@ -155,24 +149,17 @@ function SESidebar(props) {
         <p
           onClick={onClick}
           id="view-grn"
-          style={clicked == "view-grn" ? onClickStyle : s}
+          style={clicked === "view-grn" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
-            {/* <FontAwesomeIcon icon={faStickyNote} size="2x" /> */}
-
             <img
-              src={msr}
               height="40px"
               width="40px"
-              src={clicked == "view-grn" ? grnB : grn}
+              src={clicked === "view-grn" ? grnB : grn}
+              alt="grn"
             />
           </span>
           View GRN
-          {/* {numOfOrders > 0 && (
-            <Badge className="ml-3" color="danger">
-              {numOfOrders}
-            </Badge>
-          )} */}
         </p>
       </Link>
     </div>

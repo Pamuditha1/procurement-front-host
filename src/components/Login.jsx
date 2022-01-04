@@ -36,7 +36,7 @@ function Login(props) {
       console.log(props);
       switch (result.type) {
         case "Site Engineer":
-          props.history.push("/site-engineer");
+          props.history.push("/site-engineer/view-msr");
           break;
 
         case "Site Supervisor":
@@ -50,11 +50,13 @@ function Login(props) {
           props.history.push("/pur-dep");
           break;
         case "Admin":
-          props.history.push("/admin");
+          props.history.push("/admin/stock");
           break;
         case "Supplier":
           props.history.push("/supplier");
           break;
+        default:
+          props.history.push("/");
       }
     } else {
       setinvalidLogin(true);
