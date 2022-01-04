@@ -40,7 +40,7 @@ function Login(props) {
           break;
 
         case "Site Supervisor":
-          props.history.push("/site-supervisor");
+          props.history.push("/site-supervisor/view-msr");
           break;
 
         case "QS Department":
