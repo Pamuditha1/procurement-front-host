@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Redirect, Route, Switch, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Switch } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 import SSSidebar from "./SSSidebar";
@@ -8,47 +8,33 @@ import ViewMSRItems from "./viewMSRItems";
 
 import updateMSR from "../../services/updateMSR";
 
-function SiteSupervisor() {
+function SiteSupervisor({ history }) {
   useEffect(() => {
     document.title = "Site Supervisor";
   }, []);
 
-  const [modalItems, setmodalItems] = useState([]);
-  const [selectedId, setselectedId] = useState("");
-  const [status, setstatus] = useState("");
-  const [selectedMSR, setselectedMSR] = useState({});
-
   const jwt = localStorage.getItem("token");
   const userID = jwtDecode(jwt)._id;
 
-  const viewItems = (items, id, status, p) => {
-    // setisModalOpen(true);
-    setmodalItems(items);
-    setselectedId(id);
-    setstatus(status);
-    setselectedMSR(p);
-  };
   const approveItem = async (id) => {
-    // console.log("Approved", id);
-
     let msr = {
       decision: "Approved",
       id: id,
       user: userID,
     };
-    await updateMSR(msr);
+    const success = await updateMSR(msr);
+    if (success) history.push("/site-supervisor/view-msr");
   };
+
   const rejectItem = async (id, reason) => {
-    // console.log("Rejected", id);
-    // console.log("Approved", id);
     let msr = {
       decision: "Rejected",
       id: id,
       user: userID,
       reasons: reason,
     };
-    // console.log(msr);
-    await updateMSR(msr);
+    const success = await updateMSR(msr);
+    if (success) history.push("/site-supervisor/view-msr");
   };
   return (
     <div>
@@ -58,24 +44,13 @@ function SiteSupervisor() {
         </div>
         <div className="container col-10">
           <Switch>
-            {/* <h1>Hello</h1> */}
-            {/* <Route path="/site-supervisor/view-msr" component={ViewMSR}/> */}
+            <Route exact path="/site-supervisor/view-msr" component={ViewMSR} />
             <Route
-              exact
-              path="/site-supervisor/view-msr"
-              render={(props) => <ViewMSR viewItems={viewItems} {...props} />}
-            />
-            <Route
-              path="/site-supervisor/view-msr/items"
+              path="/site-supervisor/view-msr/:id"
               render={(props) => (
                 <ViewMSRItems
-                  viewItems={viewItems}
                   approveItem={approveItem}
                   rejectItem={rejectItem}
-                  selectedId={selectedId}
-                  status={status}
-                  selectedMSR={selectedMSR}
-                  msrs={modalItems}
                   {...props}
                 />
               )}
