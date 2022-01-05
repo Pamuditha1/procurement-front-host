@@ -18,7 +18,6 @@ function CreatePO({ po, selectedPR, removeFromPO }) {
   };
   const jwt = localStorage.getItem("token");
   const userID = jwtDecode(jwt)._id;
-  // const [totalAmount, settotalAmount] = useState(0);
   const [addiToPO, setaddiToPO] = useState({
     transportCost: 0,
     totalAmount: 0,
@@ -31,14 +30,13 @@ function CreatePO({ po, selectedPR, removeFromPO }) {
   });
   const [suppliers, setsuppliers] = useState([]);
   const [siteEngineers, setsiteEngineers] = useState([]);
-  const [paymentMethods, setpaymentMethods] = useState([
+  const paymentMethods = [
     "Choose Method",
     "Credit",
     "Cash",
     "Online Transfer",
     "Digital Wallet",
-  ]);
-  //   console.log(selectedMSR);
+  ];
 
   useEffect(() => {
     let t = 0;
@@ -67,8 +65,6 @@ function CreatePO({ po, selectedPR, removeFromPO }) {
       setpoNo(no);
     }
     fetchData();
-
-    // settotalAmount(t);
   }, [po, addiToPO.transportCost]);
   const submitPO = async () => {
     let poS = {
@@ -81,7 +77,6 @@ function CreatePO({ po, selectedPR, removeFromPO }) {
       supplier: addiToPO.supplier,
       se: addiToPO.se,
     };
-    console.log("PO", poS);
     await createPO(poS);
   };
   const remove = (no) => {
@@ -155,13 +150,11 @@ function CreatePO({ po, selectedPR, removeFromPO }) {
             <th>Rate</th>
             <th>Amount</th>
             <th>Remarks</th>
-            {/* <th>Supplier</th> */}
             <th></th>
           </tr>
         </thead>
         <tbody>
           {po.map((p, index) => {
-            // setsubTotal(subTotal + p.user.total)
             console.log(p);
             return (
               <tr key={index}>
@@ -178,7 +171,6 @@ function CreatePO({ po, selectedPR, removeFromPO }) {
                 <td className="text-center" style={remarksStyle}>
                   {p.item.remarks}
                 </td>
-                {/* <td className="text-center">{p.item.supplier}</td> */}
                 <td>
                   <Button
                     onClick={() => remove(p.item.no)}
@@ -302,19 +294,6 @@ function CreatePO({ po, selectedPR, removeFromPO }) {
             }
           />
         </div>
-        {/* <div className="form-group col-12">
-          <label htmlFor="se" className="col-5">
-            Contact Person at Site
-          </label>
-          <input
-            onChange={onChangeAdd}
-            value={addiToPO.se}
-            className="form-control col-11 ml-3"
-            type="text"
-            id="se"
-            name="se"
-          />
-        </div> */}
         <div className="form-group col-6">
           <label htmlFor="se" className="col-12">
             Contact Person at the Site

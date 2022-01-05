@@ -70,7 +70,9 @@ function AdminViewGRN() {
                       {new Date(p.timeStamp).toLocaleTimeString()}
                     </td>
                     <td className="text-center">
-                      {new Date(p.deliveredOn).toLocaleDateString()}
+                      {p.deliveredOn
+                        ? new Date(p.deliveredOn).toLocaleDateString()
+                        : "-"}
                     </td>
                     <td className="text-center">{p.createdBy.username}</td>
                   </tr>

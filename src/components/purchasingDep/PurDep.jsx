@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import CreatePO from "./CreatePO";
 import PDSidebar from "./PDSidebar";
@@ -16,29 +16,8 @@ function PurDep() {
   useEffect(() => {
     document.title = "Purchasing Department";
   }, []);
-  const [modalItems, setmodalItems] = useState([]);
-  const [selectedId, setselectedId] = useState("");
-  const [status, setstatus] = useState("");
-  const [selectedPR, setselectedPR] = useState({});
-  const [selectedPO, setselectedPO] = useState({});
-  const [selectedGRN, setselectedGRN] = useState({});
   const [selectedDU, setselectedDU] = useState({});
 
-  const viewItems = (items, id, status, p) => {
-    // setisModalOpen(true);
-    setmodalItems(items);
-    setselectedId(id);
-    setstatus(status);
-    setselectedPR(p);
-  };
-
-  const viewPO = (p) => {
-    setselectedPO(p);
-  };
-  const viewGRNItems = (p) => {
-    setselectedGRN(p);
-    console.log("SELECTED GRN", selectedGRN);
-  };
   const viewDU = (p) => {
     setselectedDU(p);
   };
@@ -50,63 +29,19 @@ function PurDep() {
         </div>
         <div className="container col-10">
           <Switch>
-            <Route
-              exact
-              path="/pur-dep/view-pr"
-              render={(props) => <PDViewPR viewItems={viewItems} {...props} />}
-            />
-            <Route
-              path="/pur-dep/view-pr/items"
-              render={(props) => (
-                <PDViewPRItems
-                  viewItems={viewItems}
-                  selectedId={selectedId}
-                  status={status}
-                  prs={modalItems}
-                  selectedPR={selectedPR}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/pur-dep/view-po"
-              render={(props) => <PDViewPO viewItems={viewPO} {...props} />}
-            />
-            <Route
-              path="/pur-dep/view-po/items"
-              render={(props) => (
-                <PDViewPOItems
-                  viewItems={viewItems}
-                  selectedPO={selectedPO}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/pur-dep/view-grn"
-              render={(props) => (
-                <PDViewGRN viewItems={viewGRNItems} {...props} />
-              )}
-            />
-            <Route
-              path="/pur-dep/view-grn/items"
-              render={(props) => (
-                <PDViewGRNItems
-                  viewItems={viewGRNItems}
-                  selectedGRN={selectedGRN}
-                  {...props}
-                />
-              )}
-            />
+            <Route exact path="/pur-dep/view-pr" component={PDViewPR} />
+            <Route path="/pur-dep/view-pr/:id" component={PDViewPRItems} />
+            <Route exact path="/pur-dep/view-po" component={PDViewPO} />
+            <Route path="/pur-dep/view-po/:id" component={PDViewPOItems} />
+            <Route exact path="/pur-dep/view-grn" component={PDViewGRN} />
+            <Route path="/pur-dep/view-grn/:id" component={PDViewGRNItems} />
             <Route
               exact
               path="/pur-dep/view-du"
               render={(props) => <PDViewDU viewItems={viewDU} {...props} />}
             />
             <Route
-              path="/pur-dep/view-du/items"
+              path="/pur-dep/view-du/:id"
               render={(props) => (
                 <PDViewDUItems
                   viewItems={viewDU}
@@ -115,11 +50,6 @@ function PurDep() {
                 />
               )}
             />
-            {/*<Route
-              exact
-              path="/qs-dep"
-              render={(props) => <QSViewMSR viewItems={viewItems} {...props} />}
-            /> */}
             <Route path="/pur-dep/create-po" component={CreatePO} />
           </Switch>
         </div>

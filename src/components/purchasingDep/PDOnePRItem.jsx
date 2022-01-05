@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 function OnePRItem({ p, adtoPO, index }) {
-  const [item, setitem] = useState({});
-  const [added, setadded] = useState(false);
+  const [item] = useState(p);
+  const [added] = useState(false);
   const [rateAamount, setrateAamount] = useState({
     rate: 0,
     amount: 0,
   });
-  useEffect(() => {
-    setitem(p);
-  }, []);
 
   const changeRate = (e) => {
     setrateAamount({
@@ -22,7 +19,6 @@ function OnePRItem({ p, adtoPO, index }) {
       item,
       rateAamount,
     });
-    // setadded(true);
   };
   const qtyStyle = {
     maxWidth: "80px",
@@ -35,11 +31,7 @@ function OnePRItem({ p, adtoPO, index }) {
       </td>
       <td className="text-center">{item.description}</td>
       <td className="text-center">{item.unit}</td>
-      {/* <td className="text-center">{p.quantity}</td> */}
-      <td className="text-center">
-        {/* <input onChange={qtyChange} value={item.quantity} /> */}
-        {item.quantity}
-      </td>
+      <td className="text-center">{item.quantity}</td>
       <td className="text-center">
         <input
           type="number"
@@ -51,7 +43,6 @@ function OnePRItem({ p, adtoPO, index }) {
       </td>
       <td className="text-center">Rs. {rateAamount.amount}</td>
       <td className="text-center">{item.remarks}</td>
-      {/* <td className="text-center">{item.supplier}</td> */}
       <td className="text-center">
         <button
           onClick={() => addItemToPO(item, rateAamount)}

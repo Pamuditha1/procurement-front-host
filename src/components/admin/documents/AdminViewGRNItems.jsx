@@ -175,8 +175,9 @@ function AdminViewGRNItems() {
                     selectedGRN.deliveredOnTime === "No" && "text-danger"
                   }
                 >
-                  {selectedGRN.deliveredOn &&
-                    new Date(selectedGRN.deliveredOn).toLocaleDateString()}
+                  {selectedGRN.deliveredOn
+                    ? new Date(selectedGRN.deliveredOn).toLocaleDateString()
+                    : "-"}
                 </strong>
               </div>
             </div>

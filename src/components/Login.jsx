@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { toast } from "react-toastify";
 import Background from "../images/cover.png";
 
 import userLogin from "../services/userLoginService";
@@ -12,28 +10,21 @@ function Login(props) {
     email: "",
     password: "",
   });
-  const [invalidLogin, setinvalidLogin] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const onchange = (e) => {
     setloginData({
       ...loginData,
       [e.target.name]: e.target.value,
     });
-    // console.log(customerData)
-  };
-  const reload = () => {
-    window.location.reload(false);
   };
 
   const submit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     const result = await userLogin(loginData);
     if (result) {
       localStorage.setItem("token", result.jwt);
       localStorage.setItem("type", result.type);
-      console.log(props);
+
       switch (result.type) {
         case "Site Engineer":
           props.history.push("/site-engineer/view-msr");
@@ -47,7 +38,7 @@ function Login(props) {
           props.history.push("/qs-dep/view-msr");
           break;
         case "Purchasing Department":
-          props.history.push("/pur-dep");
+          props.history.push("/pur-dep/view-pr");
           break;
         case "Admin":
           props.history.push("/admin/stock");
@@ -58,17 +49,10 @@ function Login(props) {
         default:
           props.history.push("/");
       }
-    } else {
-      setinvalidLogin(true);
     }
-    console.log(loginData);
-    setLoading(false);
   };
 
   const style = {
-    // backgroundImage: `url(${process.env.PUBLIC_URL + '/image.png'})`
-
-    //marginTop: "7%",
     paddingTop: "6%",
     height: "100%",
     backgroundImage: `url(${Background})`,
@@ -88,19 +72,6 @@ function Login(props) {
 
   return (
     <div className="row" style={style}>
-      {/* {invalidLogin && (
-        <center>
-          <div class="alert alert-warning" role="alert">
-            Please check you email and password.{" "}
-          </div>
-        </center>
-      )} */}
-      {/* <Link to="/user/login">
-          <button type="button" className="btn btn-light">
-            Not Registered Yet? Register
-          </button>
-        </Link> */}
-
       <div className="col-3"></div>
       <form className="container mt-5 mb-5 col-6" style={formStyle}>
         <center>

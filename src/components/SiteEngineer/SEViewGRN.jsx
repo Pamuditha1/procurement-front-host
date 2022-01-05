@@ -59,7 +59,9 @@ function SEViewGRN() {
                     </td>
                     <td className="text-center">{p.grnNo}</td>
                     <td className="text-center text-warning">
-                      {new Date(p.deliveredOn).toLocaleDateString()}
+                      {p.deliveredOn
+                        ? new Date(p.deliveredOn).toLocaleDateString()
+                        : "-"}
                     </td>
                     <td className="text-center">
                       {new Date(p.timeStamp).toLocaleDateString()}
