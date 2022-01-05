@@ -13,7 +13,6 @@ function ShowUser(props) {
     localStorage.removeItem("token");
     localStorage.removeItem("type");
     toast.dark("Logged Out Successfully");
-    // props.history.push("/");
   };
 
   return (

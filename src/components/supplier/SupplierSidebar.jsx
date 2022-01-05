@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { faStickyNote } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Badge } from "reactstrap";
 import "../../css/sideBar.css";
 import ShowUser from "../ShowUser";
@@ -20,9 +18,6 @@ function SupplierSidebar() {
       let count = await getPOPendingPRCount();
       setnumOfOrders(count);
     }, 5000);
-
-    // let count = await getOrdersCount()
-    // setnumOfOrders(count)
   }, []);
 
   const onClickStyle = {
@@ -34,7 +29,6 @@ function SupplierSidebar() {
   const s = {};
   const onClick = (e) => {
     setclicked(e.target.id);
-    console.log(clicked);
   };
 
   return (
@@ -44,13 +38,14 @@ function SupplierSidebar() {
         <p
           onClick={onClick}
           id="view-po"
-          style={clicked == "view-po" ? onClickStyle : s}
+          style={clicked === "view-po" ? onClickStyle : s}
         >
           <span style={{ marginRight: 10 }}>
             <img
               height="35px"
               width="35px"
-              src={clicked == "view-po" ? poB : po}
+              src={clicked === "view-po" ? poB : po}
+              alt="po"
             />
           </span>
           View PO

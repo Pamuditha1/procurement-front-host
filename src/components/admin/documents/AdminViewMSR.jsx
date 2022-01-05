@@ -11,7 +11,6 @@ function AdminViewMSR() {
   useEffect(() => {
     async function fetchMSRs() {
       const results = await getMSRs();
-      console.log(results);
       setmsrs(results);
     }
 

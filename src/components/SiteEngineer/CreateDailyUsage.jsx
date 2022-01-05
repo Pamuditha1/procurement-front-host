@@ -41,7 +41,7 @@ function CreateDailyUsage() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   const search = async (e) => {
     if (e.key === "Enter") {
@@ -115,8 +115,6 @@ function CreateDailyUsage() {
   };
 
   const submit = async (e) => {
-    console.log(reportItems);
-
     const jwt = localStorage.getItem("token");
     const userID = jwtDecode(jwt)._id;
 

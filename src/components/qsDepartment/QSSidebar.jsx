@@ -33,7 +33,6 @@ function QSSidebar() {
   };
   const onClick = (e) => {
     setclicked(e.target.id);
-    console.log(clicked);
   };
 
   return (

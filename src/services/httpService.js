@@ -8,7 +8,7 @@ axios.interceptors.response.use(null, (error) => {
     error.response.status < 500;
 
   if (!expextedError) {
-    console.log("Logging the error", error);
+    console.error("Logging the error", error);
     toast.error("An unexpexted error occured.");
   }
 

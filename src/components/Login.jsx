@@ -44,7 +44,7 @@ function Login(props) {
           props.history.push("/admin/stock");
           break;
         case "Supplier":
-          props.history.push("/supplier");
+          props.history.push("/supplier/view-po");
           break;
         default:
           props.history.push("/");
@@ -67,8 +67,6 @@ function Login(props) {
     color: "white",
     borderRadius: "20px",
   };
-
-  console.log("URL", `${process.env.PUBLIC_URL + "/image.png"}`);
 
   return (
     <div className="row" style={style}>

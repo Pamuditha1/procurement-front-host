@@ -49,7 +49,6 @@ function AdminSidebar() {
   const s = {};
   const onClick = (e) => {
     setclicked(e.target.id);
-    console.log(clicked);
   };
 
   return (

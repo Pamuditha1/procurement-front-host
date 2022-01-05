@@ -12,14 +12,14 @@ export default function getPRPendingMSRCount() {
     })
     .catch(function (error) {
       if (error.response.data) {
-        console.log(error.response.data);
+        console.error(error.response.data);
         toast.error(error.response.data);
       }
       if (error.response) {
-        console.log(error.response);
+        console.error(error.response);
         toast.error(error.response);
       } else {
-        console.log(error);
+        console.error(error);
         toast.error(error);
       }
     });

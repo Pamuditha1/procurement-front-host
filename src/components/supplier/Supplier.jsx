@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, Route, Switch, Link } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 import SupplierSidebar from "./SupplierSidebar";
@@ -19,30 +19,23 @@ function Supplier() {
   const userID = jwtDecode(jwt)._id;
 
   const viewItems = (p) => {
-    // setisModalOpen(true);
     setselectedPO(p);
   };
   const approveItem = async (id) => {
-    // console.log("Approved", id);
-
     let po = {
       decision: "Confirmed",
       id: id,
       user: userID,
     };
     await updatePO(po);
-    console.log(po);
   };
   const rejectItem = async (id, reason) => {
-    // console.log("Rejected", id);
-    // console.log("Approved", id);
     let po = {
       decision: "Rejected",
       id: id,
       user: userID,
       reasons: reason,
     };
-    console.log(po);
     await updatePO(po);
   };
   return (
@@ -61,7 +54,7 @@ function Supplier() {
               )}
             />
             <Route
-              path="/supplier/view-po/items"
+              path="/supplier/view-po/:id"
               render={(props) => (
                 <ViewPOItems
                   viewItems={viewItems}

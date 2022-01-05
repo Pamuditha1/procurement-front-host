@@ -43,7 +43,7 @@ function CreateMSR() {
 
   useEffect(() => {
     fetchSupp();
-  }, []);
+  });
 
   const search = async (e) => {
     if (e.key === "Enter") {

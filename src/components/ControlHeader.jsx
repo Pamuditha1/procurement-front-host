@@ -9,15 +9,8 @@ function ControlHeader() {
     width: "100%",
     textAlign: "center",
     position: "relative",
-    // paddingTop: "30px",
     color: "white",
   };
-  // const style = {
-  //   backgroundImage: `url(${Background})`,
-  //   backgroundPosition: "center",
-  //   backgroundRepeat: "no-repeat",
-  //   backgroundSize: "cover",
-  // };
   return (
     <div style={style}>
       <div className="row">
@@ -28,17 +21,14 @@ function ControlHeader() {
           <p>Procurement Management System</p>
         </div>
         <div className="col-1">
-          <img src={Logo} width="70px" style={{ paddingTop: "20px" }} />
+          <img
+            src={Logo}
+            width="70px"
+            style={{ paddingTop: "20px" }}
+            alt="logo"
+          />
         </div>
       </div>
-
-      {/* <img src={logo} id="logo" height="100px" width="100px" />
-      <div id="siteName">
-        <h3 id="adminbrand">NINETEESCollection</h3>
-        <h1 id="admintagline" style={{ color: "red" }}>
-          <strong>Control Pannel</strong>
-        </h1>
-      </div> */}
     </div>
   );
 }

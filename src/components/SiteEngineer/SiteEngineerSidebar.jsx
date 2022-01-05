@@ -44,7 +44,6 @@ function SESidebar(props) {
   };
   const onClick = (e) => {
     setclicked(e.target.id);
-    console.log(clicked);
   };
   const logoColor = {
     color: "white",

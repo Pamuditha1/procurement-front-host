@@ -65,7 +65,7 @@ function CreatePO({ po, selectedPR, removeFromPO }) {
       setpoNo(no);
     }
     fetchData();
-  }, [po, addiToPO.transportCost]);
+  }, [po, addiToPO]);
   const submitPO = async () => {
     let poS = {
       po,
@@ -155,7 +155,6 @@ function CreatePO({ po, selectedPR, removeFromPO }) {
         </thead>
         <tbody>
           {po.map((p, index) => {
-            console.log(p);
             return (
               <tr key={index}>
                 <td className="text-center">
