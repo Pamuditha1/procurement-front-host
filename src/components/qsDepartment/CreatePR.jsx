@@ -14,7 +14,6 @@ function CreatePR({ pr, selectedMSR, removeFromPR }) {
   };
   const jwt = localStorage.getItem("token");
   const userID = jwtDecode(jwt)._id;
-  //   console.log(selectedMSR);
 
   useEffect(() => {
     async function fetchSupp() {
@@ -30,7 +29,6 @@ function CreatePR({ pr, selectedMSR, removeFromPR }) {
       user: userID,
       prNo: prNo,
     };
-    console.log(prS);
     createPR(prS);
   };
   const remove = (no) => {
@@ -65,14 +63,11 @@ function CreatePR({ pr, selectedMSR, removeFromPR }) {
             <th>Unit</th>
             <th>Quantity</th>
             <th>Remarks</th>
-            {/* <th>Supplier</th> */}
             <th></th>
           </tr>
         </thead>
         <tbody>
           {pr.map((p, index) => {
-            // setsubTotal(subTotal + p.user.total)
-
             return (
               <tr key={index}>
                 <td className="text-center">
@@ -84,7 +79,6 @@ function CreatePR({ pr, selectedMSR, removeFromPR }) {
                 <td className="text-center" style={remarksStyle}>
                   {p.remarks}
                 </td>
-                {/* <td className="text-center">{p.supplier}</td> */}
                 <td>
                   <Button
                     onClick={() => remove(p.no)}

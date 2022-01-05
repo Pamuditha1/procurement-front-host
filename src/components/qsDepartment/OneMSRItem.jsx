@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 function OneMSRItem({ p, adtoPR, index }) {
-  const [item, setitem] = useState({});
+  const [item, setitem] = useState(p);
   const [added, setadded] = useState(false);
-  useEffect(() => {
-    setitem(p);
-  }, []);
 
   const qtyChange = (e) => {
     setitem({ ...item, quantity: e.target.value });
@@ -25,7 +22,6 @@ function OneMSRItem({ p, adtoPR, index }) {
       </td>
       <td className="text-center">{item.description}</td>
       <td className="text-center">{item.unit}</td>
-      {/* <td className="text-center">{p.quantity}</td> */}
       <td className="text-center">
         <input
           type="number"
@@ -35,7 +31,6 @@ function OneMSRItem({ p, adtoPR, index }) {
         />
       </td>
       <td className="text-center">{item.remarks}</td>
-      {/* <td className="text-center">{item.supplier}</td> */}
       <td className="text-center">
         <button
           onClick={() => addItemToPR(item)}

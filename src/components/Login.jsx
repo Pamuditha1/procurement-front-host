@@ -44,7 +44,7 @@ function Login(props) {
           break;
 
         case "QS Department":
-          props.history.push("/qs-dep");
+          props.history.push("/qs-dep/view-msr");
           break;
         case "Purchasing Department":
           props.history.push("/pur-dep");
@@ -69,8 +69,7 @@ function Login(props) {
     // backgroundImage: `url(${process.env.PUBLIC_URL + '/image.png'})`
 
     //marginTop: "7%",
-    paddingTop: "10%",
-    width: "100%",
+    paddingTop: "6%",
     height: "100%",
     backgroundImage: `url(${Background})`,
     backgroundPosition: "center",
