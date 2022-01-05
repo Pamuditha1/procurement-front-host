@@ -22,7 +22,7 @@ function Login(props) {
     e.preventDefault();
     const result = await userLogin(loginData);
     if (result) {
-      localStorage.setItem("token", result.jwt);
+      localStorage.setItem("pms-token", result.jwt);
       localStorage.setItem("type", result.type);
 
       switch (result.type) {

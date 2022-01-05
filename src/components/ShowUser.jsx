@@ -5,12 +5,12 @@ import jwtDecode from "jwt-decode";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function ShowUser(props) {
-  const jwt = localStorage.getItem("token");
+function ShowUser() {
+  const jwt = localStorage.getItem("pms-token");
   const usern = jwtDecode(jwt).name;
 
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("pms-token");
     localStorage.removeItem("type");
     toast.dark("Logged Out Successfully");
   };

@@ -6,7 +6,7 @@ const apiEndPoint = `${api}/update-msr/recreated`;
 
 export default function updateRecreatedMSR(msr) {
   return http
-    .post(apiEndPoint, msr)
+    .put(apiEndPoint, msr)
     .then(function (response) {
       toast.success(`${response.data}`);
     })

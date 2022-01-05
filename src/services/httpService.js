@@ -1,11 +1,31 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-axios.interceptors.response.use(null, (error) => {
+let headers = {
+  Authorization: "",
+};
+const token = localStorage.getItem("pms-token");
+
+if (token) {
+  headers.Authorization = `Bearer ${token}`;
+  headers["auth-token"] = token;
+}
+
+const authInstance = axios.create({
+  headers,
+});
+
+authInstance.interceptors.response.use(null, (error) => {
   const expextedError =
     error.response &&
     error.response.status >= 400 &&
     error.response.status < 500;
+
+  if (error.response.status === 403 || error.response.status === 401) {
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 3000);
+  }
 
   if (!expextedError) {
     console.error("Logging the error", error);
@@ -16,9 +36,9 @@ axios.interceptors.response.use(null, (error) => {
 });
 
 const http = {
-  get: axios.get,
-  post: axios.post,
-  put: axios.put,
-  delete: axios.delete,
+  get: authInstance.get,
+  post: authInstance.post,
+  put: authInstance.put,
+  delete: authInstance.delete,
 };
 export default http;

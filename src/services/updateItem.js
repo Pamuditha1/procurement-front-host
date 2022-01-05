@@ -6,7 +6,7 @@ const apiEndPoint = `${api}/edit-item`;
 
 export default function updateItem(item) {
   return http
-    .post(apiEndPoint, item)
+    .put(apiEndPoint, item)
     .then(function (response) {
       toast.success(`${response.data}`);
     })

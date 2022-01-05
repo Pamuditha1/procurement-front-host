@@ -6,7 +6,7 @@ const apiEndPoint = `${api}/update-user`;
 
 export default function updateUser(user) {
   return http
-    .post(apiEndPoint, user)
+    .put(apiEndPoint, user)
     .then(function (response) {
       toast.success(`${response.data}`);
     })

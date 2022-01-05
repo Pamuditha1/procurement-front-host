@@ -6,7 +6,7 @@ const apiEndPoint = `${api}/update-user/remove`;
 
 export default function removeeUser(id) {
   return http
-    .post(`${apiEndPoint}/${id}`)
+    .delete(`${apiEndPoint}/${id}`)
 
     .then(function (response) {
       toast.dark(`${response.data}`);

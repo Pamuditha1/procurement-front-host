@@ -6,7 +6,7 @@ const apiEndPoint = `${api}/update-po`;
 
 export default function updatePO(po) {
   return http
-    .post(apiEndPoint, po)
+    .put(apiEndPoint, po)
     .then(function (response) {
       toast.success(`${response.data}`);
     })

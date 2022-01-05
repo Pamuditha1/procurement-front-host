@@ -6,7 +6,7 @@ const apiEndPoint = `${api}/update-msr`;
 
 export default function updateMSR(msr) {
   return http
-    .post(apiEndPoint, msr)
+    .put(apiEndPoint, msr)
     .then(function (response) {
       toast.success(`${response.data}`);
       return true;
