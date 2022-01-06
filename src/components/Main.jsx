@@ -11,10 +11,11 @@ import SiteSupervisor from "./Site Supervisor/SiteSupervisor";
 import SiteEngineer from "./SiteEngineer/SiteEngineer";
 import Supplier from "./supplier/Supplier";
 import PrivateRoute from "./PrivateRoute";
+import NoMatch from "./NoMatch";
 
 function Main() {
   useEffect(() => {
-    document.title = "Welkin Constructions";
+    document.title = "Success Constructions | PMS";
   }, []);
 
   const style = {
@@ -46,7 +47,10 @@ function Main() {
           />
           <PrivateRoute path="/admin" component={Admin} type="Admin" />
           <PrivateRoute path="/supplier" component={Supplier} type="Supplier" />
-          <Route path="/" component={Login} />
+          <Route exact path="/" component={Login} />
+          <Route path="*">
+            <NoMatch />
+          </Route>
         </Switch>
       </div>
     </div>

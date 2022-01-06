@@ -27,8 +27,8 @@ authInstance.interceptors.response.use(null, (error) => {
     }, 3000);
   }
 
-  if (!expextedError) {
-    console.error("Logging the error", error);
+  if (!error.response || !expextedError) {
+    console.error("API Error : ", error);
     toast.error("An unexpexted error occured.");
   }
 
