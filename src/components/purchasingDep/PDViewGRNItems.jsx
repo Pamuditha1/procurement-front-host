@@ -131,7 +131,7 @@ function PDViewGRNItems() {
                 </tr>
               </thead>
               <tbody>
-                {selectedGRN.items.map((p, index) => {
+                {selectedGRN?.items?.map((p, index) => {
                   return (
                     <tr key={index}>
                       <td className="text-center">

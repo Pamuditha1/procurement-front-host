@@ -89,7 +89,7 @@ function PDViewDUItems() {
                 </tr>
               </thead>
               <tbody>
-                {selectedDU.items.map((p, index) => {
+                {selectedDU?.items?.map((p, index) => {
                   return (
                     <tr key={index}>
                       <td className="text-center">

@@ -25,12 +25,12 @@ function PDSidebar() {
     setInterval(async () => {
       let count = await getPOPendingPRCount();
       setnumOfOrders(count);
-    }, 5000);
+    }, 30000);
 
     setInterval(async () => {
       let count = await getPORejectCount();
       setpoRejected(count);
-    }, 5000);
+    }, 30000);
   }, []);
 
   const onClickStyle = {

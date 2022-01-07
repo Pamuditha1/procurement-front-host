@@ -110,8 +110,15 @@ function PDViewPRItems() {
                 </tr>
               </thead>
               <tbody>
-                {selectedPR.items.map((p, index) => {
-                  return <OnePRItem p={p} adtoPO={adtoPO} index={index} />;
+                {selectedPR?.items?.map((p, index) => {
+                  return (
+                    <OnePRItem
+                      key={index}
+                      p={p}
+                      adtoPO={adtoPO}
+                      index={index}
+                    />
+                  );
                 })}
               </tbody>
             </Table>
