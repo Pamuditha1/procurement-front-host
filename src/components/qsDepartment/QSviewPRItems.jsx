@@ -4,7 +4,6 @@ import { Link, useParams } from "react-router-dom";
 import Loader from "react-loader-spinner";
 
 import QSOnePRItem from "./QSOnePRItem";
-// import CreatePO from "./CreatePO";
 import getOnePR from "../../services/getOnePR";
 
 function QSViewPRItems() {
@@ -98,8 +97,15 @@ function QSViewPRItems() {
               </tr>
             </thead>
             <tbody>
-              {selectedPR.items.map((p, index) => {
-                return <QSOnePRItem p={p} adtoPO={adtoPO} index={index} />;
+              {selectedPR?.items?.map((p, index) => {
+                return (
+                  <QSOnePRItem
+                    key={index}
+                    p={p}
+                    adtoPO={adtoPO}
+                    index={index}
+                  />
+                );
               })}
             </tbody>
           </Table>

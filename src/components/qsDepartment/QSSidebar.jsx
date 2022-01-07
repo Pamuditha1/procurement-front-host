@@ -19,7 +19,7 @@ function QSSidebar() {
     setInterval(async () => {
       let count = await getPRPendingMSRCount();
       setnumOfOrders(count);
-    }, 5000);
+    }, 30000);
   }, []);
 
   const onClickStyle = {
