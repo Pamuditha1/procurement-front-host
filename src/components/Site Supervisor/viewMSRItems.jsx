@@ -8,6 +8,7 @@ import getOneMSR from "../../services/getOneMSR";
 function ViewMSRItems({ approveItem, rejectItem }) {
   const { id } = useParams();
   const [selectedMSR, setselectedMSR] = useState(null);
+  const [loading, setloading] = useState(false);
 
   const [reason, setreason] = useState("");
 
@@ -29,15 +30,19 @@ function ViewMSRItems({ approveItem, rejectItem }) {
   };
 
   const approve = () => {
+    setloading(true);
     approveItem(id);
+    setloading(false);
   };
   const reject = () => {
+    setloading(true);
     rejectItem(id, reason);
+    setloading(false);
   };
 
   return (
     <>
-      {!selectedMSR ? (
+      {!selectedMSR || loading ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -99,9 +104,9 @@ function ViewMSRItems({ approveItem, rejectItem }) {
               </tr>
             </thead>
             <tbody>
-              {selectedMSR.items.map((p, index) => {
+              {selectedMSR?.items?.map((p, index) => {
                 return (
-                  <tr key={p.no}>
+                  <tr key={index}>
                     <td className="text-center">
                       <strong>{index + 1}</strong>
                     </td>

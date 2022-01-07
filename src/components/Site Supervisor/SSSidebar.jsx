@@ -17,7 +17,7 @@ function SSSidebar() {
     setInterval(async () => {
       let count = await getMSRsCount();
       setnumOfOrders(count);
-    }, 5000);
+    }, 30000);
   }, []);
 
   const onClickStyle = {
