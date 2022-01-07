@@ -9,6 +9,7 @@ export default function createMSR(msr) {
     .post(apiEndPoint, msr)
     .then(function (response) {
       toast.success(`${response.data}`);
+      return true;
     })
     .catch(function (error) {
       if (error.response.data) {

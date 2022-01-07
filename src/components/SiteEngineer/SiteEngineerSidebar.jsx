@@ -30,7 +30,7 @@ function SESidebar(props) {
       let poCount = await getPOsCount();
       setnumOfOrders(count);
       setconfirmedPOCount(poCount);
-    }, 5000);
+    }, 30000);
   }, []);
 
   const onClickStyle = {

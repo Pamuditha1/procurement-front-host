@@ -16,7 +16,7 @@ function CreatePO({ po, selectedPR, removeFromPO }) {
     maxWidth: "200px",
     maxHeight: "200px",
   };
-  const jwt = localStorage.getItem("token");
+  const jwt = localStorage.getItem("pms-token");
   const userID = jwtDecode(jwt)._id;
   const [addiToPO, setaddiToPO] = useState({
     transportCost: 0,

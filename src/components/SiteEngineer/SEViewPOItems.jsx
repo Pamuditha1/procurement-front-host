@@ -114,7 +114,7 @@ function SEViewPOItems() {
               </tr>
             </thead>
             <tbody>
-              {selectedPO.items.map((p, index) => {
+              {selectedPO?.items?.map((p, index) => {
                 return (
                   <tr key={p.item.no}>
                     <td className="text-center">

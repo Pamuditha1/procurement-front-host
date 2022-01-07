@@ -6,7 +6,7 @@ import Loader from "react-loader-spinner";
 import getMSRs from "../../services/getMSRs";
 
 function SEViewMSR() {
-  const [msrs, setmsrs] = useState(null);
+  const [msrs, setmsrs] = useState([]);
 
   useEffect(() => {
     async function fetchMSRs() {
@@ -18,7 +18,7 @@ function SEViewMSR() {
 
   return (
     <>
-      {!msrs ? (
+      {msrs?.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -50,7 +50,7 @@ function SEViewMSR() {
               </tr>
             </thead>
             <tbody>
-              {msrs.map((p) => {
+              {msrs?.map((p) => {
                 return (
                   <tr style={{ textAlign: "center" }} key={p._id}>
                     <td>

@@ -86,7 +86,7 @@ function ViewUsers({ viewUser }) {
             </thead>
             <tbody>
               {users?.map((i, index) => {
-                if (i.type === "Root") return false;
+                if (i.email === "pamuditha@gmail.com") return false;
                 return (
                   <React.Fragment key={index}>
                     <tr style={{ textAlign: "center" }} key={i._id}>

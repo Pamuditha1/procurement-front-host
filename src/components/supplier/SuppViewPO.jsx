@@ -10,7 +10,7 @@ function SuppViewPO() {
   const [pos, setpos] = useState(null);
 
   let userID = "";
-  const jwt = localStorage.getItem("token");
+  const jwt = localStorage.getItem("pms-token");
   if (jwt) {
     userID = jwtDecode(jwt)._id;
   } else {

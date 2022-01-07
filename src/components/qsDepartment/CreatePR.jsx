@@ -12,7 +12,7 @@ function CreatePR({ pr, selectedMSR, removeFromPR }) {
     maxWidth: "200px",
     maxHeight: "200px",
   };
-  const jwt = localStorage.getItem("token");
+  const jwt = localStorage.getItem("pms-token");
   const userID = jwtDecode(jwt)._id;
 
   useEffect(() => {
