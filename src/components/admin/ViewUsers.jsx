@@ -6,7 +6,7 @@ import Loader from "react-loader-spinner";
 import getUsers from "../../services/getUsers";
 
 function ViewUsers({ viewUser }) {
-  const [users, setusers] = useState(null);
+  const [users, setusers] = useState([]);
   const [searchItem, setsearchItem] = useState("");
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function ViewUsers({ viewUser }) {
 
   return (
     <>
-      {!users ? (
+      {users.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -85,11 +85,10 @@ function ViewUsers({ viewUser }) {
               </tr>
             </thead>
             <tbody>
-              {users.map((i) => {
-                // setsubTotal(subTotal + p.user.total)
-
+              {users?.map((i, index) => {
+                if (i.email === "pamuditha@gmail.com") return false;
                 return (
-                  <>
+                  <React.Fragment key={index}>
                     <tr style={{ textAlign: "center" }} key={i._id}>
                       <td className="text-center">{i.username}</td>
                       <td className="text-center">{i.contactNo}</td>
@@ -107,7 +106,7 @@ function ViewUsers({ viewUser }) {
                         </Link>
                       </td>
                     </tr>
-                  </>
+                  </React.Fragment>
                 );
               })}
             </tbody>

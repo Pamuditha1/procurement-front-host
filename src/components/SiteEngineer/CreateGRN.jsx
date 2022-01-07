@@ -34,7 +34,7 @@ function CreateGRN({ poData }) {
   };
 
   const submitGRN = async () => {
-    const jwt = localStorage.getItem("token");
+    const jwt = localStorage.getItem("pms-token");
     const userID = jwtDecode(jwt)._id;
 
     let grnData = {

@@ -39,6 +39,7 @@ function OnePRItem({ p, adtoPO, index }) {
           onChange={changeRate}
           value={rateAamount.rate}
           style={qtyStyle}
+          min={0}
         />
       </td>
       <td className="text-center">Rs. {rateAamount.amount}</td>

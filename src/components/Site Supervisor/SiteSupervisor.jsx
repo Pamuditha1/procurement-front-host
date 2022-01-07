@@ -13,7 +13,7 @@ function SiteSupervisor({ history }) {
     document.title = "Site Supervisor";
   }, []);
 
-  const jwt = localStorage.getItem("token");
+  const jwt = localStorage.getItem("pms-token");
   const userID = jwtDecode(jwt)._id;
 
   const approveItem = async (id) => {

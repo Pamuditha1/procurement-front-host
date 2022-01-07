@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Loader from "react-loader-spinner";
 
 import addUser from "../../services/addUser";
 
@@ -16,6 +17,7 @@ function RegisterUserWValidation() {
     password: "",
     repeatpassword: "",
   };
+  const [loading, setloading] = useState(false);
   const formik = useFormik({
     initialValues: initialUser,
     validationSchema: Yup.object({
@@ -50,10 +52,12 @@ function RegisterUserWValidation() {
     }),
     enableReinitialize: true,
     onSubmit: async (values) => {
+      setloading(true);
       const success = await addUser(values);
       if (success) {
         formik.resetForm();
       }
+      setloading(false);
     },
   });
 
@@ -75,205 +79,225 @@ function RegisterUserWValidation() {
       >
         Register User
       </h6>
-      <form
-        onSubmit={formik.handleSubmit}
-        className="container mt-5"
-        autoComplete="off"
-      >
-        <div className="row">
-          <div className="col-12">
+      <>
+        {loading ? (
+          <div className="container text-center" style={{ width: "793px" }}>
+            <Loader
+              type="Puff"
+              color="#050A30"
+              height={100}
+              width={100}
+              timeout={5000}
+            />
+          </div>
+        ) : (
+          <form
+            onSubmit={formik.handleSubmit}
+            className="container mt-5"
+            autoComplete="off"
+          >
             <div className="row">
-              <div className="form-group col-12">
-                <label htmlFor="username" className="col-5">
-                  User Name
-                </label>
-                <input
-                  autocomplete="new-password"
-                  onChange={formik.handleChange}
-                  value={formik.values.username}
-                  className="form-control col-11 ml-3"
-                  type="text"
-                  id="username"
-                  name="username"
-                />
-                {formik.errors.username && formik.touched.username && (
-                  <p className="ml-5 mt-2 text-danger">
-                    {formik.errors.username}
-                  </p>
-                )}
-              </div>
-              <div className="form-group col-12">
-                <label htmlFor="nic" className="col-5">
-                  NIC
-                </label>
-                <input
-                  onChange={formik.handleChange}
-                  value={formik.values.nic}
-                  className="form-control col-11 ml-3"
-                  type="text"
-                  id="nic"
-                  name="nic"
-                  placeholder="xxxxxxxxxV"
-                />
-                {formik.errors.nic && formik.touched.nic && (
-                  <p className="ml-5 mt-2 text-danger">{formik.errors.nic}</p>
-                )}
-              </div>
-              <div className="form-group col-12">
-                <label htmlFor="email" className="col-5">
-                  Email
-                </label>
-                <input
-                  onChange={formik.handleChange}
-                  value={formik.values.email}
-                  className="form-control col-11 ml-3"
-                  type="text"
-                  id="email"
-                  name="email"
-                />
-                {formik.errors.email && formik.touched.email && (
-                  <p className="ml-5 mt-2 text-danger">{formik.errors.email}</p>
-                )}
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="contactNo" className="col-5">
-                  Contact No (Mobile)
-                </label>
-                <input
-                  onChange={formik.handleChange}
-                  value={formik.values.contactNo}
-                  className="form-control col-11 ml-3"
-                  type="text"
-                  id="contactNo"
-                  name="contactNo"
-                  placeholder="07xxxxxxxx"
-                />
-                {formik.errors.contactNo && formik.touched.contactNo && (
-                  <p className="ml-5 mt-2 text-danger">
-                    {formik.errors.contactNo}
-                  </p>
-                )}
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="contactNo2" className="col-5">
-                  Contact No (Fixed)
-                </label>
-                <input
-                  onChange={formik.handleChange}
-                  value={formik.values.contactNo2}
-                  className="form-control col-10"
-                  type="text"
-                  id="contactNo2"
-                  name="contactNo2"
-                  placeholder="0xxxxxxxxxx"
-                />
-                {formik.errors.contactNo2 && formik.touched.contactNo2 && (
-                  <p className="ml-5 mt-2 text-danger">
-                    {formik.errors.contactNo2}
-                  </p>
-                )}
-              </div>
-              <div className="form-group col-12">
-                <label htmlFor="address" className="col-5">
-                  Address
-                </label>
-                <input
-                  onChange={formik.handleChange}
-                  value={formik.values.address}
-                  className="form-control col-11 ml-3"
-                  type="text"
-                  id="address"
-                  name="address"
-                />
-                {formik.errors.address && formik.touched.address && (
-                  <p className="ml-5 mt-2 text-danger">
-                    {formik.errors.address}
-                  </p>
-                )}
-              </div>
+              <div className="col-12">
+                <div className="row">
+                  <div className="form-group col-12">
+                    <label htmlFor="username" className="col-5">
+                      User Name
+                    </label>
+                    <input
+                      autoComplete="new-password"
+                      onChange={formik.handleChange}
+                      value={formik.values.username}
+                      className="form-control col-11 ml-3"
+                      type="text"
+                      id="username"
+                      name="username"
+                    />
+                    {formik.errors.username && formik.touched.username && (
+                      <p className="ml-5 mt-2 text-danger">
+                        {formik.errors.username}
+                      </p>
+                    )}
+                  </div>
+                  <div className="form-group col-12">
+                    <label htmlFor="nic" className="col-5">
+                      NIC
+                    </label>
+                    <input
+                      onChange={formik.handleChange}
+                      value={formik.values.nic}
+                      className="form-control col-11 ml-3"
+                      type="text"
+                      id="nic"
+                      name="nic"
+                      placeholder="xxxxxxxxxV"
+                    />
+                    {formik.errors.nic && formik.touched.nic && (
+                      <p className="ml-5 mt-2 text-danger">
+                        {formik.errors.nic}
+                      </p>
+                    )}
+                  </div>
+                  <div className="form-group col-12">
+                    <label htmlFor="email" className="col-5">
+                      Email
+                    </label>
+                    <input
+                      onChange={formik.handleChange}
+                      value={formik.values.email}
+                      className="form-control col-11 ml-3"
+                      type="text"
+                      id="email"
+                      name="email"
+                    />
+                    {formik.errors.email && formik.touched.email && (
+                      <p className="ml-5 mt-2 text-danger">
+                        {formik.errors.email}
+                      </p>
+                    )}
+                  </div>
+                  <div className="form-group col-6">
+                    <label htmlFor="contactNo" className="col-5">
+                      Contact No (Mobile)
+                    </label>
+                    <input
+                      onChange={formik.handleChange}
+                      value={formik.values.contactNo}
+                      className="form-control col-11 ml-3"
+                      type="text"
+                      id="contactNo"
+                      name="contactNo"
+                      placeholder="07xxxxxxxx"
+                    />
+                    {formik.errors.contactNo && formik.touched.contactNo && (
+                      <p className="ml-5 mt-2 text-danger">
+                        {formik.errors.contactNo}
+                      </p>
+                    )}
+                  </div>
+                  <div className="form-group col-6">
+                    <label htmlFor="contactNo2" className="col-5">
+                      Contact No (Fixed)
+                    </label>
+                    <input
+                      onChange={formik.handleChange}
+                      value={formik.values.contactNo2}
+                      className="form-control col-10"
+                      type="text"
+                      id="contactNo2"
+                      name="contactNo2"
+                      placeholder="0xxxxxxxxxx"
+                    />
+                    {formik.errors.contactNo2 && formik.touched.contactNo2 && (
+                      <p className="ml-5 mt-2 text-danger">
+                        {formik.errors.contactNo2}
+                      </p>
+                    )}
+                  </div>
+                  <div className="form-group col-12">
+                    <label htmlFor="address" className="col-5">
+                      Address
+                    </label>
+                    <input
+                      onChange={formik.handleChange}
+                      value={formik.values.address}
+                      className="form-control col-11 ml-3"
+                      type="text"
+                      id="address"
+                      name="address"
+                    />
+                    {formik.errors.address && formik.touched.address && (
+                      <p className="ml-5 mt-2 text-danger">
+                        {formik.errors.address}
+                      </p>
+                    )}
+                  </div>
 
-              <div className="form-group col-12">
-                <label htmlFor="type" className="col-5">
-                  User Role
-                </label>
+                  <div className="form-group col-12">
+                    <label htmlFor="type" className="col-5">
+                      User Role
+                    </label>
 
-                <select
-                  onChange={formik.handleChange}
-                  value={formik.values.type}
-                  id="type"
-                  name="type"
-                  className="form-control col-11 ml-3"
-                  required
-                >
-                  {roles.map((option) => {
-                    return (
-                      <option
-                        key={option}
-                        value={option}
-                        style={{ textAlign: "center" }}
+                    <select
+                      onChange={formik.handleChange}
+                      value={formik.values.type}
+                      id="type"
+                      name="type"
+                      className="form-control col-11 ml-3"
+                      required
+                    >
+                      {roles.map((option) => {
+                        return (
+                          <option
+                            key={option}
+                            value={option}
+                            style={{ textAlign: "center" }}
+                          >
+                            {option}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    {formik.errors.type && formik.touched.type && (
+                      <p className="ml-5 mt-2 text-danger">
+                        {formik.errors.type}
+                      </p>
+                    )}
+                  </div>
+                  <div className="form-group col-6">
+                    <label htmlFor="password" className="col-5">
+                      Password
+                    </label>
+                    <input
+                      autocomplete="new-password"
+                      onChange={formik.handleChange}
+                      value={formik.values.password}
+                      className="form-control col-11 ml-3"
+                      type="password"
+                      id="password"
+                      name="password"
+                    />
+                    {formik.errors.password && formik.touched.password && (
+                      <p className="ml-5 mt-2 text-danger">
+                        {formik.errors.password}
+                      </p>
+                    )}
+                  </div>
+                  <div className="form-group col-6">
+                    <label htmlFor="repeatpassword" className="col-5">
+                      Repeat Password
+                    </label>
+                    <input
+                      onChange={formik.handleChange}
+                      value={formik.values.repeatpassword}
+                      className="form-control col-10 ml-3"
+                      type="password"
+                      id="repeatpassword"
+                      name="repeatpassword"
+                    />
+                    {formik.errors.repeatpassword &&
+                      formik.touched.repeatpassword && (
+                        <p className="ml-5 mt-2 text-danger">
+                          {formik.errors.repeatpassword}
+                        </p>
+                      )}
+                  </div>
+                  <div className="form-group col-12 mt-3">
+                    <center>
+                      <button
+                        //onClick={submit}
+                        type="submit"
+                        className="btn btn-success"
                       >
-                        {option}
-                      </option>
-                    );
-                  })}
-                </select>
-                {formik.errors.type && formik.touched.type && (
-                  <p className="ml-5 mt-2 text-danger">{formik.errors.type}</p>
-                )}
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="password" className="col-5">
-                  Password
-                </label>
-                <input
-                  autocomplete="new-password"
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                  className="form-control col-11 ml-3"
-                  type="password"
-                  id="password"
-                  name="password"
-                />
-                {formik.errors.password && formik.touched.password && (
-                  <p className="ml-5 mt-2 text-danger">
-                    {formik.errors.password}
-                  </p>
-                )}
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="repeatpassword" className="col-5">
-                  Repeat Password
-                </label>
-                <input
-                  onChange={formik.handleChange}
-                  value={formik.values.repeatpassword}
-                  className="form-control col-10 ml-3"
-                  type="password"
-                  id="repeatpassword"
-                  name="repeatpassword"
-                />
-                {formik.errors.repeatpassword &&
-                  formik.touched.repeatpassword && (
-                    <p className="ml-5 mt-2 text-danger">
-                      {formik.errors.repeatpassword}
-                    </p>
-                  )}
-              </div>
-              <div className="form-group col-12 mt-3">
-                <center>
-                  <button
-                    //onClick={submit}
-                    type="submit"
-                    className="btn btn-success"
-                  >
-                    Register
-                  </button>
-                </center>
+                        Register
+                      </button>
+                    </center>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </form>
+          </form>
+        )}
+      </>
     </div>
   );
 }

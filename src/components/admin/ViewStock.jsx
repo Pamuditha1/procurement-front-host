@@ -5,7 +5,7 @@ import Loader from "react-loader-spinner";
 import getItems from "../../services/getItems";
 
 function ViewStock() {
-  const [items, setitems] = useState(null);
+  const [items, setitems] = useState([]);
   const [searchItem, setsearchItem] = useState("");
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function ViewStock() {
 
   return (
     <>
-      {!items ? (
+      {items?.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -83,9 +83,9 @@ function ViewStock() {
               </tr>
             </thead>
             <tbody>
-              {items.map((i) => {
+              {items?.map((i, index) => {
                 return (
-                  <>
+                  <React.Fragment key={index}>
                     <tr style={{ textAlign: "center" }} key={i._id}>
                       <td className="text-center">{i.code}</td>
                       <td className="text-center">{i.name}</td>
@@ -109,7 +109,7 @@ function ViewStock() {
                         {i.suppliers && i.suppliers.toString()}
                       </td>
                     </tr>
-                  </>
+                  </React.Fragment>
                 );
               })}
             </tbody>

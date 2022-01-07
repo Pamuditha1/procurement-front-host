@@ -111,7 +111,7 @@ function PDViewPOItems() {
               </tr>
             </thead>
             <tbody>
-              {selectedPO.items.map((p, index) => {
+              {selectedPO?.items?.map((p, index) => {
                 return (
                   <tr key={index}>
                     <td className="text-center">
@@ -159,25 +159,25 @@ function PDViewPOItems() {
             </tbody>
           </Table>
           <div className="row ml-3">
-            <div className="col-3">Supplier : </div>
+            <div className="col-4">Supplier : </div>
             <div className="col-5">
               <strong>{selectedPO.supplier.username}</strong>
             </div>
           </div>
           <div className="row ml-3">
-            <div className="col-3">Payment Method : </div>
+            <div className="col-4">Payment Method : </div>
             <div className="col-5">
               <strong>{selectedPO.poDetails.payment}</strong>
             </div>
           </div>
           <div className="row ml-3">
-            <div className="col-3">Delivery Address : </div>
+            <div className="col-4">Delivery Address : </div>
             <div className="col-5">
               <strong>{selectedPO.poDetails.delivery}</strong>
             </div>
           </div>
           <div className="row ml-3">
-            <div className="col-3">Delivery Date : </div>
+            <div className="col-4">Delivery Date : </div>
             <div className="col-5">
               <strong>
                 {new Date(
@@ -187,7 +187,7 @@ function PDViewPOItems() {
             </div>
           </div>
           <div className="row ml-3">
-            <div className="col-3">Contact Person at the Site : </div>
+            <div className="col-4">Contact Person at the Site : </div>
             <div className="col-5">
               <strong>
                 {selectedPO.se.username} - {selectedPO.se.contactNo}
@@ -195,7 +195,7 @@ function PDViewPOItems() {
             </div>
           </div>
           <div className="row ml-3 mb-5">
-            <div className="col-3">Remarks : </div>
+            <div className="col-4">Remarks : </div>
             <div className="col-5">
               <strong>{selectedPO.poDetails.remarks}</strong>
             </div>

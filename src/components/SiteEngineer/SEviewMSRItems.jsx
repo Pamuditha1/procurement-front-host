@@ -99,9 +99,14 @@ function SEViewMSRItems() {
               </tr>
             </thead>
             <tbody>
-              {oneMSR.items.map((p, index) => {
+              {oneMSR?.items?.map((p, index) => {
                 return (
-                  <SEOneMSRItem p={p} addToEdit={addToEdit} index={index} />
+                  <SEOneMSRItem
+                    key={index}
+                    p={p}
+                    addToEdit={addToEdit}
+                    index={index}
+                  />
                 );
               })}
             </tbody>

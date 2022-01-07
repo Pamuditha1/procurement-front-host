@@ -6,7 +6,7 @@ import Loader from "react-loader-spinner";
 import getDUs from "../../services/getDUs";
 
 function PDViewDU() {
-  const [grns, setgrns] = useState(null);
+  const [grns, setgrns] = useState([]);
 
   useEffect(() => {
     async function fetchMSRs() {
@@ -19,7 +19,7 @@ function PDViewDU() {
   return (
     <>
       {" "}
-      {!grns ? (
+      {grns?.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -50,7 +50,7 @@ function PDViewDU() {
               </tr>
             </thead>
             <tbody>
-              {grns.map((p) => {
+              {grns?.map((p) => {
                 return (
                   <tr style={{ textAlign: "center" }} key={p._id}>
                     <td>

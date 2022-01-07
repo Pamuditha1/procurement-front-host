@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Badge } from "reactstrap";
 import jwtDecode from "jwt-decode";
+import Loader from "react-loader-spinner";
 
 import createMSR from "../../services/createMSRservice";
 import getItems from "../../services/getItems";
@@ -16,6 +17,7 @@ function CreateMSR() {
   const [projects, setprojects] = useState([]);
   const units = ["Choose Unit", "Bags", "Cubes", "Numbers", "Litres", "Pieces"];
   const [readProject, setreadProject] = useState(false);
+  const [loading, setloading] = useState(false);
 
   const [msrItem, setmsrItem] = useState({
     id: "",
@@ -43,9 +45,11 @@ function CreateMSR() {
 
   useEffect(() => {
     fetchSupp();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const search = async (e) => {
+    setloading(true);
     if (e.key === "Enter") {
       let items = await getItems();
       let searched = items.filter((i) => {
@@ -58,6 +62,7 @@ function CreateMSR() {
       });
       setsearchResults(searched);
     }
+    setloading(false);
   };
   const onChange = async (e) => {
     setsearchItem(e.target.value);
@@ -118,7 +123,8 @@ function CreateMSR() {
   };
 
   const submit = async (e) => {
-    const jwt = localStorage.getItem("token");
+    setloading(true);
+    const jwt = localStorage.getItem("pms-token");
     const userID = jwtDecode(jwt)._id;
 
     let msrOrder = {
@@ -126,9 +132,12 @@ function CreateMSR() {
       userID: userID,
       msrData: msrData,
     };
-    await createMSR(msrOrder);
-    fetchSupp();
-    setmsr([]);
+    const success = await createMSR(msrOrder);
+    if (success) {
+      fetchSupp();
+      setmsr([]);
+    }
+    setloading(false);
   };
 
   const addselected = (s) => {
@@ -148,211 +157,230 @@ function CreateMSR() {
       >
         Create MSR
       </h6>
-
-      <div className="form-group col-12">
-        <label htmlFor="msrNo" className="col-5">
-          MSR No
-        </label>
-        <input
-          readOnly={readProject}
-          onChange={changeNoAProject}
-          value={msrData.msrNo}
-          className="form-control col-11 ml-3"
-          type="text"
-          id="msrNo"
-          name="msrNo"
-        />
-      </div>
-      <div className="form-group col-12">
-        <label htmlFor="project" className="col-5">
-          Project
-        </label>
-        <select
-          onChange={onchangeSelectProject}
-          value={msrData.project}
-          id="project"
-          name="project"
-          className="form-control col-11 ml-3"
-          required
-        >
-          {projects.map((option) => {
-            return (
-              <option
-                key={option.id}
-                value={option.id}
-                style={{ textAlign: "center" }}
+      <>
+        {" "}
+        {loading ? (
+          <div className="container text-center" style={{ width: "793px" }}>
+            <Loader
+              type="Puff"
+              color="#050A30"
+              height={100}
+              width={100}
+              timeout={5000}
+            />
+          </div>
+        ) : (
+          <>
+            <div className="form-group col-12">
+              <label htmlFor="msrNo" className="col-5">
+                MSR No
+              </label>
+              <input
+                readOnly={readProject}
+                onChange={changeNoAProject}
+                value={msrData.msrNo}
+                className="form-control col-11 ml-3"
+                type="text"
+                id="msrNo"
+                name="msrNo"
+              />
+            </div>
+            <div className="form-group col-12">
+              <label htmlFor="project" className="col-5">
+                Project
+              </label>
+              <select
+                onChange={onchangeSelectProject}
+                value={msrData.project}
+                id="project"
+                name="project"
+                className="form-control col-11 ml-3"
+                required
               >
-                {option.projectNo} - {option.name}
-              </option>
-            );
-          })}
-        </select>
-      </div>
+                {projects.map((option) => {
+                  return (
+                    <option
+                      key={option.id}
+                      value={option.id}
+                      style={{ textAlign: "center" }}
+                    >
+                      {option.projectNo} - {option.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
 
-      <input
-        value={searchItem}
-        className="form-control mb-5 mt-5"
-        onChange={onChange}
-        onKeyDown={search}
-        placeholder="Search Items ..."
-      />
-      {searchResults &&
-        searchResults.map((s) => (
-          <Badge key={s._id} color="secondary" pill>
-            {s.name}
-            <Button
-              className="ml-1 rounded-circle"
-              onClick={() => addselected(s)}
-            >
-              +
-            </Button>
-          </Badge>
-        ))}
+            <input
+              value={searchItem}
+              className="form-control mb-5 mt-5"
+              onChange={onChange}
+              onKeyDown={search}
+              placeholder="Search Items ..."
+            />
+            {searchResults &&
+              searchResults.map((s) => (
+                <Badge key={s._id} color="secondary" pill>
+                  {s.name}
+                  <Button
+                    className="ml-1 rounded-circle"
+                    onClick={() => addselected(s)}
+                  >
+                    +
+                  </Button>
+                </Badge>
+              ))}
 
-      <form className="container mt-5" autoComplete="off">
-        <div className="row">
-          <div className="col-12">
-            <div className="row">
-              <div className="form-group col-12">
-                <label htmlFor="description" className="col-5">
-                  Description
-                </label>
-                <input
-                  onChange={onchange}
-                  value={msrItem.description}
-                  className="form-control col-11 ml-3"
-                  type="text"
-                  id="description"
-                  name="description"
-                />
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="unit" className="col-5">
-                  Unit
-                </label>
-                <select
-                  onChange={onchangeSelectUnit}
-                  value={msrItem.unit}
-                  id="unit"
-                  name="unit"
-                  className="form-control col-11 ml-3"
-                  required
-                >
-                  {units.map((option) => {
-                    return (
-                      <option
-                        key={option}
-                        value={option}
-                        style={{ textAlign: "center" }}
+            <form className="container mt-5" autoComplete="off">
+              <div className="row">
+                <div className="col-12">
+                  <div className="row">
+                    <div className="form-group col-12">
+                      <label htmlFor="description" className="col-5">
+                        Description
+                      </label>
+                      <input
+                        onChange={onchange}
+                        value={msrItem.description}
+                        className="form-control col-11 ml-3"
+                        type="text"
+                        id="description"
+                        name="description"
+                      />
+                    </div>
+                    <div className="form-group col-6">
+                      <label htmlFor="unit" className="col-5">
+                        Unit
+                      </label>
+                      <select
+                        onChange={onchangeSelectUnit}
+                        value={msrItem.unit}
+                        id="unit"
+                        name="unit"
+                        className="form-control col-11 ml-3"
+                        required
                       >
-                        {option}
-                      </option>
+                        {units.map((option) => {
+                          return (
+                            <option
+                              key={option}
+                              value={option}
+                              style={{ textAlign: "center" }}
+                            >
+                              {option}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <div className="form-group col-6">
+                      <label htmlFor="quantity" className="col-5">
+                        Quantity{" "}
+                      </label>
+                      <input
+                        onChange={onchange}
+                        value={msrItem.quantity}
+                        className="form-control col-11"
+                        type="number"
+                        id="quantity"
+                        name="quantity"
+                        max={msrItem.avaiQyt}
+                      />
+                    </div>
+                    <div className="form-group col-12">
+                      <label htmlFor="remarks" className="col-5">
+                        Remarks
+                      </label>
+                      <input
+                        onChange={onchange}
+                        value={msrItem.remarks}
+                        className="form-control col-11 ml-3"
+                        type="text"
+                        id="remarks"
+                        name="remarks"
+                      />
+                    </div>
+                    <div className="form-group col-12 mt-3">
+                      <center>
+                        <button
+                          onClick={clearItem}
+                          type="button"
+                          className="btn btn-warning"
+                        >
+                          Clear Item
+                        </button>
+                        <button
+                          onClick={onAdd}
+                          type="button"
+                          className="btn btn-primary  ml-3"
+                        >
+                          Add Item
+                        </button>
+                      </center>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div>
+              <Table hover borderless>
+                <thead className="text-center">
+                  <tr>
+                    <th>No</th>
+                    <th>Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>Remarks</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {msr.map((p, index) => {
+                    return (
+                      <tr key={p.description}>
+                        <td className="text-center">
+                          <strong>{index + 1}</strong>
+                        </td>
+                        <td className="text-center">
+                          <strong>{p.description}</strong>
+                        </td>
+                        <td className="text-center">
+                          <strong>{p.unit}</strong>
+                        </td>
+                        <td className="text-center">
+                          <strong>{p.quantity}</strong>
+                        </td>
+                        <td className="text-center">
+                          <strong>{p.remarks}</strong>
+                        </td>
+                        <td>
+                          <Button
+                            color="danger"
+                            onClick={() => removeFromTable(p)}
+                          >
+                            {" "}
+                            <strong>X Remove</strong>{" "}
+                          </Button>
+                        </td>
+                      </tr>
                     );
                   })}
-                </select>
-              </div>
-              <div className="form-group col-6">
-                <label htmlFor="quantity" className="col-5">
-                  Quantity{" "}
-                </label>
-                <input
-                  onChange={onchange}
-                  value={msrItem.quantity}
-                  className="form-control col-11"
-                  type="number"
-                  id="quantity"
-                  name="quantity"
-                  max={msrItem.avaiQyt}
-                />
-              </div>
-              <div className="form-group col-12">
-                <label htmlFor="remarks" className="col-5">
-                  Remarks
-                </label>
-                <input
-                  onChange={onchange}
-                  value={msrItem.remarks}
-                  className="form-control col-11 ml-3"
-                  type="text"
-                  id="remarks"
-                  name="remarks"
-                />
-              </div>
-              <div className="form-group col-12 mt-3">
-                <center>
-                  <button
-                    onClick={clearItem}
-                    type="button"
-                    className="btn btn-warning"
-                  >
-                    Clear Item
-                  </button>
-                  <button
-                    onClick={onAdd}
-                    type="button"
-                    className="btn btn-primary  ml-3"
-                  >
-                    Add Item
-                  </button>
-                </center>
+                </tbody>
+              </Table>
+              <div>
+                <button
+                  onClick={submit}
+                  type="submit"
+                  className="btn btn-success float-right mb-3"
+                >
+                  Create MSR
+                </button>
               </div>
             </div>
-          </div>
-        </div>
-      </form>
-
-      <div>
-        <Table hover borderless>
-          <thead className="text-center">
-            <tr>
-              <th>No</th>
-              <th>Description</th>
-              <th>Unit</th>
-              <th>Quantity</th>
-              <th>Remarks</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {msr.map((p, index) => {
-              return (
-                <tr key={p.description}>
-                  <td className="text-center">
-                    <strong>{index + 1}</strong>
-                  </td>
-                  <td className="text-center">
-                    <strong>{p.description}</strong>
-                  </td>
-                  <td className="text-center">
-                    <strong>{p.unit}</strong>
-                  </td>
-                  <td className="text-center">
-                    <strong>{p.quantity}</strong>
-                  </td>
-                  <td className="text-center">
-                    <strong>{p.remarks}</strong>
-                  </td>
-                  <td>
-                    <Button color="danger" onClick={() => removeFromTable(p)}>
-                      {" "}
-                      <strong>X Remove</strong>{" "}
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-        <div>
-          <button
-            onClick={submit}
-            type="submit"
-            className="btn btn-success float-right mb-3"
-          >
-            Create MSR
-          </button>
-        </div>
-      </div>
+          </>
+        )}
+      </>
     </div>
   );
 }

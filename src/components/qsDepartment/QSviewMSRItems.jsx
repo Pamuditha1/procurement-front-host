@@ -93,8 +93,15 @@ function QSViewMSRItems() {
                 </tr>
               </thead>
               <tbody>
-                {selectedMSR.items.map((p, index) => {
-                  return <OneMSRItem p={p} adtoPR={adtoPR} index={index} />;
+                {selectedMSR?.items?.map((p, index) => {
+                  return (
+                    <OneMSRItem
+                      key={index}
+                      p={p}
+                      adtoPR={adtoPR}
+                      index={index}
+                    />
+                  );
                 })}
               </tbody>
             </Table>

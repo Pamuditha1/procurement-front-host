@@ -6,7 +6,7 @@ import Loader from "react-loader-spinner";
 import getPOs from "../../services/getPOs";
 
 function PDViewPO() {
-  const [pos, setpos] = useState(null);
+  const [pos, setpos] = useState([]);
 
   useEffect(() => {
     async function fetchMSRs() {
@@ -18,7 +18,7 @@ function PDViewPO() {
 
   return (
     <>
-      {!pos ? (
+      {pos?.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -51,7 +51,7 @@ function PDViewPO() {
               </tr>
             </thead>
             <tbody>
-              {pos.map((p) => {
+              {pos?.map((p) => {
                 return (
                   <tr style={{ textAlign: "center" }} key={p._id}>
                     <td>

@@ -58,8 +58,8 @@ function Reports() {
           width="100%"
           height="500"
           src="https://app.powerbi.com/reportEmbed?reportId=cc8a2279-4dd6-48d2-8b21-0fc4945456d1&autoAuth=true&ctid=aa232db2-7a78-4414-a529-33db9124cba7&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWVhc3QtYXNpYS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D"
-          frameborder="0"
-          allowFullScreen="true"
+          frameBorder="0"
+          allowFullScreen
         ></iframe>
       </div>
     </div>

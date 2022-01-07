@@ -15,7 +15,7 @@ function Supplier() {
 
   const [selectedPO, setselectedPO] = useState({});
 
-  const jwt = localStorage.getItem("token");
+  const jwt = localStorage.getItem("pms-token");
   const userID = jwtDecode(jwt)._id;
 
   const viewItems = (p) => {

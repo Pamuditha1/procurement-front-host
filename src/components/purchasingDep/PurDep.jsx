@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import CreatePO from "./CreatePO";
@@ -16,11 +16,7 @@ function PurDep() {
   useEffect(() => {
     document.title = "Purchasing Department";
   }, []);
-  const [selectedDU, setselectedDU] = useState({});
 
-  const viewDU = (p) => {
-    setselectedDU(p);
-  };
   return (
     <div>
       <div className="row">
@@ -35,21 +31,8 @@ function PurDep() {
             <Route path="/pur-dep/view-po/:id" component={PDViewPOItems} />
             <Route exact path="/pur-dep/view-grn" component={PDViewGRN} />
             <Route path="/pur-dep/view-grn/:id" component={PDViewGRNItems} />
-            <Route
-              exact
-              path="/pur-dep/view-du"
-              render={(props) => <PDViewDU viewItems={viewDU} {...props} />}
-            />
-            <Route
-              path="/pur-dep/view-du/:id"
-              render={(props) => (
-                <PDViewDUItems
-                  viewItems={viewDU}
-                  selectedDU={selectedDU}
-                  {...props}
-                />
-              )}
-            />
+            <Route exact path="/pur-dep/view-du" component={PDViewDU} />
+            <Route path="/pur-dep/view-du/:id" component={PDViewDUItems} />
             <Route path="/pur-dep/create-po" component={CreatePO} />
           </Switch>
         </div>
