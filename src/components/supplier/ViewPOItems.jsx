@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Button, Table } from "reactstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 
 import getOnePO from "../../services/getOnePO";
 
 function ViewPOItems({ approveItem, rejectItem }) {
   const { id } = useParams();
+  const history = useHistory();
   const [selectedPO, setselectedPO] = useState(null);
   const [reason, setreason] = useState("");
+  const [loading, setloading] = useState(false);
 
   const onchange = (e) => {
     setreason(e.target.value);
@@ -28,15 +30,21 @@ function ViewPOItems({ approveItem, rejectItem }) {
   };
 
   const approve = () => {
+    setloading(true);
     approveItem(selectedPO._id);
+    setloading(false);
+    history.push("/supplier/view-po");
   };
   const reject = () => {
+    setloading(true);
     rejectItem(selectedPO._id, reason);
+    setloading(false);
+    history.push("/supplier/view-po");
   };
 
   return (
     <>
-      {!selectedPO ? (
+      {!selectedPO || loading ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -122,7 +130,7 @@ function ViewPOItems({ approveItem, rejectItem }) {
               </tr>
             </thead>
             <tbody>
-              {selectedPO.items.map((p, index) => {
+              {selectedPO?.items?.map((p, index) => {
                 return (
                   <tr key={index}>
                     <td className="text-center">

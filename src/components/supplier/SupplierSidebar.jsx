@@ -17,7 +17,7 @@ function SupplierSidebar() {
     setInterval(async () => {
       let count = await getPOPendingPRCount();
       setnumOfOrders(count);
-    }, 5000);
+    }, 30000);
   }, []);
 
   const onClickStyle = {
