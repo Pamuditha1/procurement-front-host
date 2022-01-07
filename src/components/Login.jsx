@@ -46,6 +46,9 @@ function Login(props) {
         case "Supplier":
           props.history.push("/supplier/view-po");
           break;
+        case "Root":
+          props.history.push("/admin/stock");
+          break;
         default:
           props.history.push("/");
       }

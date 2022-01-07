@@ -28,7 +28,8 @@ function SuppViewPO() {
     }
 
     fetchMSRs();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

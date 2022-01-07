@@ -41,7 +41,8 @@ function CreateDailyUsage() {
 
   useEffect(() => {
     fetchData();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const search = async (e) => {
     if (e.key === "Enter") {

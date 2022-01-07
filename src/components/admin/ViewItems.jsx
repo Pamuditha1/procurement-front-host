@@ -6,7 +6,7 @@ import Loader from "react-loader-spinner";
 import getItems from "../../services/getItems";
 
 function ViewItems() {
-  const [items, setitems] = useState(null);
+  const [items, setitems] = useState([]);
   const [searchItem, setsearchItem] = useState("");
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function ViewItems() {
 
   return (
     <>
-      {!items ? (
+      {items?.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -78,9 +78,9 @@ function ViewItems() {
               </tr>
             </thead>
             <tbody>
-              {items.map((i) => {
+              {items?.map((i, index) => {
                 return (
-                  <>
+                  <React.Fragment key={index}>
                     <tr style={{ textAlign: "center" }} key={i._id}>
                       <td className="text-center">{i.code}</td>
                       <td className="text-center">{i.name}</td>
@@ -94,7 +94,7 @@ function ViewItems() {
                         </Link>
                       </td>
                     </tr>
-                  </>
+                  </React.Fragment>
                 );
               })}
             </tbody>

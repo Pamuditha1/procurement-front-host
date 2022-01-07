@@ -5,7 +5,7 @@ import Loader from "react-loader-spinner";
 import getUsers from "../../services/getUsers";
 
 function ViewSuppliers() {
-  const [users, setusers] = useState(null);
+  const [users, setusers] = useState([]);
   const [searchItem, setsearchItem] = useState("");
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function ViewSuppliers() {
 
   return (
     <>
-      {!users ? (
+      {users?.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -90,9 +90,9 @@ function ViewSuppliers() {
               </tr>
             </thead>
             <tbody>
-              {users.map((i) => {
+              {users?.map((i, index) => {
                 return (
-                  <>
+                  <React.Fragment key={index}>
                     <tr style={{ textAlign: "center" }} key={i._id}>
                       <td className="text-center">{i.username}</td>
                       <td className="text-center text-danger">
@@ -103,7 +103,7 @@ function ViewSuppliers() {
                       <td className="text-center">{i.address}</td>
                       <td className="text-center">{i.projects}</td>
                     </tr>
-                  </>
+                  </React.Fragment>
                 );
               })}
             </tbody>

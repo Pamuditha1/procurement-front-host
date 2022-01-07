@@ -19,7 +19,7 @@ function AdminViewMSR() {
 
   return (
     <>
-      {msrs.length === 0 ? (
+      {msrs?.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -54,7 +54,7 @@ function AdminViewMSR() {
               </tr>
             </thead>
             <tbody>
-              {msrs.map((p) => {
+              {msrs?.map((p) => {
                 return (
                   <tr style={{ textAlign: "center" }} key={p._id}>
                     <td>

@@ -19,7 +19,7 @@ function AdminViewDU() {
 
   return (
     <>
-      {dus.length === 0 ? (
+      {dus?.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -53,7 +53,7 @@ function AdminViewDU() {
               </tr>
             </thead>
             <tbody>
-              {dus.map((p) => {
+              {dus?.map((p) => {
                 return (
                   <tr style={{ textAlign: "center" }} key={p._id}>
                     <td>

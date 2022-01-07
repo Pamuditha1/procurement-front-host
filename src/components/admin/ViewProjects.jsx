@@ -4,8 +4,8 @@ import Loader from "react-loader-spinner";
 
 import getProjects from "../../services/getProjects";
 
-function ViewProjects({ viewUser }) {
-  const [projects, setprojects] = useState(null);
+function ViewProjects() {
+  const [projects, setprojects] = useState([]);
   const [searchItem, setsearchItem] = useState("");
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function ViewProjects({ viewUser }) {
 
   return (
     <>
-      {!projects ? (
+      {projects?.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -84,9 +84,9 @@ function ViewProjects({ viewUser }) {
               </tr>
             </thead>
             <tbody>
-              {projects?.map((i) => {
+              {projects?.map((i, index) => {
                 return (
-                  <>
+                  <React.Fragment key={index}>
                     <tr style={{ textAlign: "center" }} key={i._id}>
                       <td className="text-center">{i.projectNo}</td>
                       <td className="text-center">{i.name}</td>
@@ -97,7 +97,7 @@ function ViewProjects({ viewUser }) {
                         {i.suppliers && i.suppliers.toString()}
                       </td>
                     </tr>
-                  </>
+                  </React.Fragment>
                 );
               })}
             </tbody>

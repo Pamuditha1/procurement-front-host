@@ -19,7 +19,7 @@ function AdminViewPO() {
 
   return (
     <>
-      {pos.length === 0 ? (
+      {pos?.length === 0 ? (
         <div className="container text-center" style={{ width: "793px" }}>
           <Loader
             type="Puff"
@@ -55,7 +55,7 @@ function AdminViewPO() {
               </tr>
             </thead>
             <tbody>
-              {pos.map((p) => {
+              {pos?.map((p) => {
                 return (
                   <tr style={{ textAlign: "center" }} key={p._id}>
                     <td>
