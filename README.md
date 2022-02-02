@@ -1,16 +1,20 @@
-This is a Procurement Management System designed for a construction firm to ensure the process of acquiring a goods and services outside the organization runs smoothly and efficiently as possible without any delays and issues.
+This is the Front End of a Procurement Management System designed for a construction firm to ensure the process of acquiring a goods and services outside the organization runs smoothly and efficiently as possible without any delays and issues.
 
-Demo - https://lnkd.in/g9jbrq4J
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Demo Video - https://lnkd.in/gW_V74Dh
+Back-End: https://github.com/Pamuditha1/procurement-back-host
 
-Back-End: https://lnkd.in/gbGwb3ZY
+Demo - https://success-constructions-pms.netlify.app
+
+Demo Video - https://youtu.be/ZIZ4UABrtIk
 
 Admin Credentials –
-Email: admin@gmail.com
-Password: 11111
+    Email: admin@gmail.com
+    Password: 11111
 
-Features
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Project Features
 
 - Authentication and authorization
 - Role base access control
@@ -23,7 +27,7 @@ Features
 - Report generation
 - Download GRN and DUR as pdf
 
-Technologies
+Project Technologies
 
 - Node.js
 - React.js
@@ -33,5 +37,3 @@ Technologies
 - Mailgun
 - PowerBI
 - Azure Web Apps
-
-#procurementmanagement #mern #mernstack #react #reactjs #node #nodejs #mongodb #mongoose #mongodbatlas #express #expressjs #azure #azurecertified #mernstackdeveloper #reactdeveloper #nodejsdeveloper #frontend #frontenddevelopment #frontenddeveloper #backend #backenddevelopment #backenddeveloper #fullstack #fullstackdevelopment #fullstackdeveloper #webdevelopment #webdeveloper
