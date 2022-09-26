@@ -21,7 +21,7 @@ function AdminViewPO() {
   }, []);
 
   return (
-    <div data-testid="edit-model">
+    <div data-testid="adminviewpo">
       {pos?.length === 0 ? (
         <div
           className="container text-center"

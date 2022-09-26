@@ -17,6 +17,7 @@
     "react-rainbow-components": "^1.26.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-test-renderer": "^17.0.2",
     "react-to-pdf": "0.0.14",
     "react-toastify": "^7.0.4",
     "reactstrap": "^8.9.0",
@@ -52,7 +53,6 @@
   "devDependencies": {
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-react": "^7.18.6",
-    "@testing-library/react": "^12.1.2",
-    "react-test-renderer": "^18.2.0"
+    "@testing-library/react": "^12.1.2"
   }
 }
