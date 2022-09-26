@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+} from "react";
 import { Table } from "reactstrap";
 import { Link } from "react-router-dom";
 import Loader from "react-loader-spinner";
@@ -18,9 +21,12 @@ function AdminViewPO() {
   }, []);
 
   return (
-    <>
+    <div data-testid="edit-model">
       {pos?.length === 0 ? (
-        <div className="container text-center" style={{ width: "793px" }}>
+        <div
+          className="container text-center"
+          style={{ width: "793px" }}
+        >
           <Loader
             type="Puff"
             color="#050A30"
@@ -36,8 +42,13 @@ function AdminViewPO() {
             style={{ backgroundColor: "gray" }}
           >
             PO List
-            <Link to="/admin/documents" style={{ marginLeft: "80%" }}>
-              <button className="btn btn-outline-light">Back</button>
+            <Link
+              to="/admin/documents"
+              style={{ marginLeft: "80%" }}
+            >
+              <button className="btn btn-outline-light">
+                Back
+              </button>
             </Link>
           </h6>
 
@@ -57,34 +68,55 @@ function AdminViewPO() {
             <tbody>
               {pos?.map((p) => {
                 return (
-                  <tr style={{ textAlign: "center" }} key={p._id}>
+                  <tr
+                    style={{
+                      textAlign: "center",
+                    }}
+                    key={p._id}
+                  >
                     <td>
-                      <Link to={`/admin/documents/po/${p._id}`}>
-                        <button className="btn btn-primary">View</button>
+                      <Link
+                        to={`/admin/documents/po/${p._id}`}
+                      >
+                        <button className="btn btn-primary">
+                          View
+                        </button>
                       </Link>
                     </td>
                     <td
                       className={
                         p.status === "Confirmed"
                           ? "text-success text-center"
-                          : p.status === "Rejected"
+                          : p.status ===
+                            "Rejected"
                           ? "text-danger text-center"
-                          : p.status === "Recreated" &&
+                          : p.status ===
+                              "Recreated" &&
                             "text-primary text-center"
                       }
                     >
                       {p.status}
                     </td>
-                    <td className="text-center">{p.poNo}</td>
                     <td className="text-center">
-                      {new Date(p.timeStamp).toLocaleDateString()}
+                      {p.poNo}
                     </td>
                     <td className="text-center">
-                      {new Date(p.timeStamp).toLocaleTimeString()}
+                      {new Date(
+                        p.timeStamp
+                      ).toLocaleDateString()}
                     </td>
-                    <td className="text-center">{p.createdBy.username}</td>
                     <td className="text-center">
-                      {p.approvedBy ? p.approvedBy.username : "Pending..."}
+                      {new Date(
+                        p.timeStamp
+                      ).toLocaleTimeString()}
+                    </td>
+                    <td className="text-center">
+                      {p.createdBy.username}
+                    </td>
+                    <td className="text-center">
+                      {p.approvedBy
+                        ? p.approvedBy.username
+                        : "Pending..."}
                     </td>
                   </tr>
                 );
@@ -93,7 +125,7 @@ function AdminViewPO() {
           </Table>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
