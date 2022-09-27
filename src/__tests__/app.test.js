@@ -1,25 +1,30 @@
-import { render, screen, cleanup } from '@testing-library/react';
-//import { renderer } from 'react-test-renderer';
-import * as renderer from 'react-test-renderer';
-import AdminViewPO from '../components/admin/documents/AdminViewPO';
+import { render, screen, cleanup } from "@testing-library/react";
+import * as renderer from "react-test-renderer";
+import AdminViewPO from "../components/admin/documents/AdminViewPO";
 
 describe("AdminViewPO Compenent", () => {
     afterEach(() => {
         cleanup();
     });
 
-    test('should render AdminViewPO component', () => {
+    test("Should render AdminViewPO component", () => {
         render(<AdminViewPO />);
-        const element = screen.getByTestId('adminviewpo');
+        const element = screen.getByTestId("adminviewpo");
         expect(element).toBeInTheDocument();
     });
 
-    it("Matches DOM Snapshot", () => {
+    test("Should matches DOM Snapshot", () => {
         const domTree = renderer.create(<AdminViewPO />).toJSON();
         expect(domTree).toMatchSnapshot();
     });
 
-    test('test', () => {
+    test("Should render Admin PO heading", () => {
+        render(<AdminViewPO />);
+        const element = screen.getByTestId("adminpo-heading");
+        expect(element).toHaveTextContent("Admin PO");
+    });
+
+    test("test", () => {
         expect(true).toBe(true);
     })
 })

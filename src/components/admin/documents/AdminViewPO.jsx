@@ -22,6 +22,7 @@ function AdminViewPO() {
 
   return (
     <div data-testid="adminviewpo">
+      <h2 data-testid="adminpo-heading">Admin PO</h2>
       {pos?.length === 0 ? (
         <div
           className="container text-center"
